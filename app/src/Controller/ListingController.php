@@ -6,7 +6,7 @@
 
 namespace App\Controller;
 
-use App\Service\ListingService;
+use App\Service\ListingServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -21,9 +21,9 @@ class ListingController extends AbstractController
     /**
      * Constructor.
      *
-     * @param ListingService $listingService Listing Service
+     * @param ListingServiceInterface $listingService Listing Service
      */
-    public function __construct(private readonly ListingService $listingService)
+    public function __construct(private readonly ListingServiceInterface $listingService)
     {
     }
 

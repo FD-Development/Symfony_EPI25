@@ -13,7 +13,7 @@ use Knp\Component\Pager\PaginatorInterface;
 /**
  * @class ListingService
  */
-class ListingService
+class ListingService implements ListingServiceInterface
 {
     /**
      * Items per page.
@@ -41,7 +41,7 @@ class ListingService
      *
      * @param int $page Page number
      *
-     * @return PaginationInterface PaginationInterface
+     * @return PaginationInterface Pagination Interface
      */
     public function getPaginatedListings(int $page): PaginationInterface
     {
