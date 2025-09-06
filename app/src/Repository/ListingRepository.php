@@ -1,20 +1,43 @@
 <?php
 
+/**
+ * Listing Repository.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Listing;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
+ * @class Task Repository
+ *
  * @extends ServiceEntityRepository<Listing>
  */
 class ListingRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Listing::class);
     }
+
+    /**
+     * Query all records.
+     *
+     * @return QueryBuilder Query builder
+     */
+    public function queryAll(): QueryBuilder
+    {
+        return $this->createQueryBuilder('listing');
+    }
+
 
     //    /**
     //     * @return Listing[] Returns an array of Listing objects

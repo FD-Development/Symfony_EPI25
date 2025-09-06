@@ -9,6 +9,7 @@ namespace App\Controller;
 use App\Service\ListingService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
@@ -19,24 +20,29 @@ class ListingController extends AbstractController
 {
     /**
      * Constructor.
+     *
+     * @param ListingService $listingService Listing Service
      */
-    public function __construct(private ListingService $listingService)
+    public function __construct(private readonly ListingService $listingService)
     {
     }
 
     /**
      * Index Action.
      *
+     * @param int $page Page number
+     *
      * @return Response HTTP response
      */
     #[Route('', name: 'listings_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $listing = $this->listingService->getListings();
+
+        $pagination = $this->listingService->getPaginatedListings($page);
 
         return $this->render(
             'listing/index.html.twig',
-            ['listings' => $listing]
+            ['listings' => $pagination]
         );
     }
 }

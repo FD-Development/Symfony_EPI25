@@ -2,18 +2,21 @@
 
 {% block content %}
 
+    <div class="navigation text-center">
+        {{ knp_pagination_render(listings) }}
+    </div>
 
-{% if listings is defined and listings %}
+{% if listings is defined and listings.items|length %}
     <table class="table">
      <thead>
          <tr>
-             <th scope="col">{{ 'label.title'|trans }}</th>
-             <th scope="col">{{ 'label.activated'|trans }}</th>
+             <th scope="col">{{ knp_pagination_sortable(listings, 'label.title'|trans, 'listing.title') }}</th>
+             <th scope="col">{{ knp_pagination_sortable(listings, 'label.activatedAt'|trans, 'listing.activatedAt') }}</th>
          </tr>
      </thead>
 
      <tbody>
-        {% for listing in listings %}
+        {% for listing in listings.items %}
             <tr>
                 <td>{{ listing.title }}</td>
                 <td>{{ listing.activatedAt|date('d.m.Y') }}</td>
@@ -21,6 +24,12 @@
         {% endfor %}
      </tbody>
     </table>
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(listings) }}
+    </div>
+
+
 
 {% else %}
     <p>{{ 'message.empty_list'|trans }}</p>
