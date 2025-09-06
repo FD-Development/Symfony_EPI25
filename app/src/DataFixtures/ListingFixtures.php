@@ -6,36 +6,27 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Listing;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 use Faker\Generator;
 
 /**
  * @class ListingFixtures.
  */
-class ListingFixtures extends Fixture
+class ListingFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
-     * Faker.
+     * Load data fixtures.
      */
-    protected Generator $faker;
-    /**
-     * Persistence object manager.
-     */
-    protected ObjectManager $manager;
-
-    /**
-     * Load data fixtures with the passed Entity Manager.
-     *
-     * @param ObjectManager $manager Persistence object manager
-     */
-    public function load(ObjectManager $manager): void
+    public function loadData(): void
     {
-        $this->faker = Factory::create();
+        if (!$this->manager instanceof ObjectManager || !$this->faker instanceof Generator) {
+            return;
+        }
 
-        for ($i = 0; $i < 30; ++$i) {
+        $this->createMany(100, 'listing', function (int $i) {
             $listing = new Listing();
             $listing->setTitle($this->faker->words(3, true));
             $listing->setDescription($this->faker->text());
@@ -45,9 +36,21 @@ class ListingFixtures extends Fixture
             $listing->setActivatedAt(
                 \DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-12 days', '-1 days'))
             );
-            $manager->persist($listing);
-        }
+            $category = $this->getRandomReference('category', Category::class);
+            $listing->setCategory($category);
 
-        $manager->flush();
+            return $listing;
+        });
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on.
+     *
+     * @phpstan-return array<class-string<FixtureInterface>>
+     */
+    public function getDependencies(): array
+    {
+        return [CategoryFixtures::class];
     }
 }
