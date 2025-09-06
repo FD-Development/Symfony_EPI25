@@ -49,6 +49,10 @@ class Listing
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $activatedAt = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     /**
      * Getter for id.
      *
@@ -151,6 +155,18 @@ class Listing
     public function setActivatedAt(?\DateTimeImmutable $activatedAt): static
     {
         $this->activatedAt = $activatedAt;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
