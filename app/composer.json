@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.14",
         "doctrine/doctrine-migrations-bundle": "^3.4",
         "doctrine/orm": "^3.3",
+        "knplabs/knp-paginator-bundle": "^6.9",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.1",
         "symfony/asset": "6.4.*",
@@ -95,7 +96,9 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^4.1",
         "escapestudios/symfony2-coding-standard": "^3.15",
+        "fakerphp/faker": "^1.24",
         "friendsofphp/php-cs-fixer": "^3.75",
         "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "^3.13",
