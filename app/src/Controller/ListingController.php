@@ -30,15 +30,16 @@ class ListingController extends AbstractController
     /**
      * Index Action.
      *
-     * @param int $page Page number
+     * @param int      $page       Page number
+     * @param int|null $categoryId Category Id
      *
      * @return Response HTTP response
      */
     #[Route('', name: 'listings_index', methods: ['GET'])]
-    public function index(#[MapQueryParameter] int $page = 1): Response
+    public function index(#[MapQueryParameter] int $page = 1, #[MapQueryParameter('categoryId')] ?int $categoryId = null): Response
     {
 
-        $pagination = $this->listingService->getPaginatedListings($page);
+        $pagination = $this->listingService->getPaginatedListings($page, $categoryId);
 
         return $this->render(
             'listing/index.html.twig',

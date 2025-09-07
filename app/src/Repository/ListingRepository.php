@@ -35,9 +35,25 @@ class ListingRepository extends ServiceEntityRepository
      */
     public function queryAll(): QueryBuilder
     {
-        return $this->createQueryBuilder('listing');
+        return $this->createQueryBuilder('listing')
+        ->select('listing', 'category')
+        ->leftJoin('listing.category', 'category');
     }
 
+    /**
+     * Query all records by given category Id.
+     *
+     * @param int $categoryId Category Id
+     *
+     * @return QueryBuilder Query builder
+     */
+    public function queryAllByCategory(int $categoryId): QueryBuilder
+    {
+        return $this->createQueryBuilder('listing')
+            ->andwhere('listing.category = :category')
+            ->setParameter('category', $categoryId);
+
+    }
 
     //    /**
     //     * @return Listing[] Returns an array of Listing objects

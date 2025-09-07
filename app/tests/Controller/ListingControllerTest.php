@@ -23,7 +23,7 @@ class ListingControllerTest extends WebTestCase
         $client = static::createClient();
         // when
         $client->request('GET', '/');
-        // than
+        // then
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
@@ -35,12 +35,28 @@ class ListingControllerTest extends WebTestCase
         // given
         $client = static::createClient();
         $mockService = $this->createMock(ListingService::class);
-        $mockService->method('getListings')->willReturn([]);
+        $mockService->method('getPaginatedListings')->willReturn([]);
         static::getContainer()->set(ListingService::class, $mockService);
 
         // when
         $client->request('GET', '/');
-        // than
+        // then
         $this->assertSelectorTextContains('p', 'message.empty_list');
+    }
+
+    /**
+     * Tests the filtering listings by category.
+     *
+     * @return void
+     */
+    public function testListingFilteredByCategory(): void
+    {
+        //given
+        $client = static::createClient();
+
+        //when
+        $crawler = $client->request('GET', '/?categoryId=1');
+
+        //then
     }
 }

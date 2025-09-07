@@ -37,16 +37,23 @@ class ListingService implements ListingServiceInterface
     }
 
     /**
-     * Get paginated listings.
+     * Get paginated listings able to be filtered with category.
      *
-     * @param int $page Page number
+     * @param int      $page       Page number
+     * @param int|null $categoryId Category Id
      *
      * @return PaginationInterface Pagination Interface
      */
-    public function getPaginatedListings(int $page): PaginationInterface
+    public function getPaginatedListings(int $page, ?int $categoryId): PaginationInterface
     {
+        if (null !== $categoryId) {
+            $query = $this->listingRepository->queryAllByCategory($categoryId);
+        } else {
+            $query = $this->listingRepository->queryAll();
+        }
+
         return $this->paginator->paginate(
-            $this->listingRepository->queryAll(),
+            $query,
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE,
             [
