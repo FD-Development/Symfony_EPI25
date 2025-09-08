@@ -159,11 +159,19 @@ class Listing
         return $this;
     }
 
+    /**
+     * Getter for assigned Category.
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+    /**
+     * Setter for Category.
+     *
+     * @return $this
+     */
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
