@@ -2,20 +2,21 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="row">
         <div class="navigation text-center col">
             {{ knp_pagination_render(listings) }}
         </div>
 
         {# category selector #}
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown button
+        <div class="dropdown col">
+            <button class="btn btn-secondary dropdown-toggle m-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ 'label.chooseCategoryButton'|trans }}
             </button>
              {% if categories is defined and categories %}
             <ul class="dropdown-menu">
+                <li><a class="dropdown-item bg-warning" href="{{ url('listings_index') }}">{{ 'button.clearCategory'|trans }}</a></li>
                 {% for category in categories %}
-                <li><a class="dropdown-item" href="#">{{ category.title }}</a></li>
+                <li><a class="dropdown-item" href="{{ url('listings_index', {categoryId: category.id}) }}">{{ category.title }}</a></li>
                 {% endfor %}
             </ul>
             {% endif %}
