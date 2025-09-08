@@ -26,6 +26,30 @@ class ListingFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             return;
         }
 
+        // 5 listings for category Test 1
+        for ($i = 0; $i < 5; ++$i) {
+            $listing = new Listing();
+            $listing->setTitle('Listing Test 1 - '.($i + 1));
+            $listing->setDescription($this->faker->text());
+            $listing->setCreatedAt(\DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-12 days', '-1 days')));
+            $listing->setActivatedAt(\DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-12 days', '-1 days')));
+            $listing->setCategory($this->getReference('category_Test1', Category::class));
+
+            $this->manager->persist($listing);
+        }
+
+        // 5 listings for category Test 2
+        for ($i = 0; $i < 5; ++$i) {
+            $listing = new Listing();
+            $listing->setTitle('Listing Test 2 - '.($i + 1));
+            $listing->setDescription($this->faker->text());
+            $listing->setCreatedAt(\DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-12 days', '-1 days')));
+            $listing->setActivatedAt(\DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-12 days', '-1 days')));
+            $listing->setCategory($this->getReference('category_Test2', Category::class));
+
+            $this->manager->persist($listing);
+        }
+
         $this->createMany(100, 'listing', function (int $i) {
             $listing = new Listing();
             $listing->setTitle($this->faker->words(3, true));
