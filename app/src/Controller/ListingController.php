@@ -100,4 +100,41 @@ class ListingController extends AbstractController
             ['form' => $form->createView()]
         );
     }
+
+    /**
+     * Update Action.
+     *
+     * @param Request $request HTTP Request
+     * @param Listing $listing Listing Entity
+     *
+     * @return Response HTTP Response
+     */
+    #[Route('/listing/update/{id}', name:'listing_update', requirements: ['id' => '[1-9][0-9]*'], methods: ['GET|PUT'])]
+    public function update(Request $request, Listing $listing): Response
+    {
+        $form = $this->createForm(
+            ListingType::class,
+            $listing,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('listing_update', ['id' => $listing->getId()]),
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->listingService->save($listing);
+
+            return $this->redirectToRoute('listing_view', ['id' => $listing->getId()]);
+        }
+
+        return $this->render(
+            'listing/update.html.twig',
+            [
+                'form' => $form->createView(),
+                'listing' => $listing,
+            ]
+        );
+    }
 }
