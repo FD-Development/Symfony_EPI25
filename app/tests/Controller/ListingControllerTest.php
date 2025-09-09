@@ -28,15 +28,23 @@ class ListingControllerTest extends WebTestCase
     }
 
     /**
-     * Tests if user is informed if there are no listings.
+     * Tests if user is informed if there are no listings shown.
      */
     public function testListingPageShowsEmptyMessageWhenNoListings(): void
     {
         // given
         $client = static::createClient();
-        $mockService = $this->createMock(ListingService::class);
-        $mockService->method('getPaginatedListings')->willReturn([]);
-        static::getContainer()->set(ListingService::class, $mockService);
+
+        /* Simulation of empty pagination */
+        $paginator = static::getContainer()->get('knp_paginator');
+        $pagination = $paginator->paginate([], 1, 10);
+
+        /* Service mock */
+        $serviceMock = $this->createMock(ListingService::class);
+        $serviceMock->method('getPaginatedListings')->willReturn($pagination);
+
+
+        static::getContainer()->set(ListingService::class, $serviceMock);
 
         // when
         $client->request('GET', '/');
@@ -45,18 +53,17 @@ class ListingControllerTest extends WebTestCase
     }
 
     /**
-     * Tests the filtering listings by category.
-     *
-     * @return void
+     * Tests if route `/listing/[id]` exists.
      */
-    public function testListingFilteredByCategory(): void
+    public function testListingView(): void
     {
-        //given
+        // given
         $client = static::createClient();
 
-        //when
-        $crawler = $client->request('GET', '/?categoryId=1');
+        // when
+        $client->request('GET', '/1');
 
-        //then
+        // then
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
