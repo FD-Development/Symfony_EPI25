@@ -6,10 +6,12 @@
 
 namespace App\Controller;
 
-use App\Repository\CategoryRepository;
+use App\Entity\Listing;
+use App\Form\Type\ListingType;
 use App\Service\ListingServiceInterface;
 use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
@@ -60,7 +62,7 @@ class ListingController extends AbstractController
      *
      * @param int $listingId Id number
      *
-     * @return Response HTTP response
+     * @return Response HTTP Response
      */
     #[Route('/listing/{listingId}', name: 'listings_view', requirements: ['listingId' => '[1-9][0-9]*'], methods: ['GET'])]
     public function view(int $listingId): Response
@@ -73,4 +75,29 @@ class ListingController extends AbstractController
         );
     }
 
+    /**
+     * Create Action.
+     *
+     * @param Request $request HTTP Request
+     *
+     * @return Response HTTP Response
+     */
+    #[Route('/listing/create', name: 'listings_create', methods: ['GET|POST'])]
+    public function create(Request $request): Response
+    {
+        $listing = new Listing();
+        $form = $this->createForm(ListingType::class, $listing);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->listingService->save($listing);
+
+            return $this->redirectToRoute('listings_index');
+        }
+
+        return $this->render(
+            'listing/create.html.twig',
+            ['form' => $form->createView()]
+        );
+    }
 }

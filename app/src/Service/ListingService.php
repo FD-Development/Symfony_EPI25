@@ -76,4 +76,19 @@ class ListingService implements ListingServiceInterface
     {
         return $this->listingRepository->queryById($id);
     }
+
+    /**
+     * Save entity.
+     *
+     * @param Listing $listing Listing Entity
+     */
+    public function save(Listing $listing): void
+    {
+
+        if (null === $listing->getId()) {
+            $listing->setCreatedAt(new \DateTimeImmutable());
+            $listing->setActivatedAt(null);
+        }
+        $this->listingRepository->save($listing);
+    }
 }

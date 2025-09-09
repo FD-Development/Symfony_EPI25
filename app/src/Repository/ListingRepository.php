@@ -70,6 +70,15 @@ class ListingRepository extends ServiceEntityRepository
             ->getoneOrNullResult();
     }
 
+    /**
+     * Save entity.
+     */
+    public function save(Listing $listing): void
+    {
+        $this->getEntityManager()->persist($listing);
+        $this->getEntityManager()->flush();
+    }
+
     //    /**
     //     * @return Listing[] Returns an array of Listing objects
     //     */
