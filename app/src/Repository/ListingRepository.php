@@ -59,9 +59,9 @@ class ListingRepository extends ServiceEntityRepository
      *
      * @param int $id Listing Id
      *
-     * @return Listing Listing Entity
+     * @return Listing|null Listing Entity
      */
-    public function queryById(int $id): Listing
+    public function queryById(int $id): ?Listing
     {
         return $this->createQueryBuilder('listing')
             ->andwhere('listing.id = :id')
@@ -72,6 +72,8 @@ class ListingRepository extends ServiceEntityRepository
 
     /**
      * Save entity.
+     *
+     * @param Listing $listing Listing Entity
      */
     public function save(Listing $listing): void
     {

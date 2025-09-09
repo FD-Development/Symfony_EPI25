@@ -70,9 +70,9 @@ class ListingService implements ListingServiceInterface
      *
      * @param int $id Listing id
      *
-     * @return Listing Listing Entity
+     * @return Listing|null Listing Entity
      */
-    public function getOne(int $id): Listing
+    public function getOne(int $id): ?Listing
     {
         return $this->listingRepository->queryById($id);
     }

@@ -6,6 +6,7 @@
 
 namespace App\Service;
 
+use App\Entity\Listing;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
@@ -22,4 +23,20 @@ interface ListingServiceInterface
      * @return PaginationInterface Pagination Interface
      */
     public function getPaginatedListings(int $page, ?int $categoryId): PaginationInterface;
+
+    /**
+     * Get Listing by Id.
+     *
+     * @param int $id Listing id
+     *
+     * @return Listing|null Listing Entity
+     */
+    public function getOne(int $id): ?Listing;
+
+    /**
+     * Save entity.
+     *
+     * @param Listing $listing Listing Entity
+     */
+    public function save(Listing $listing): void;
 }
