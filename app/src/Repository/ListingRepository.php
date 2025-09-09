@@ -81,6 +81,17 @@ class ListingRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Delete entity.
+     *
+     * @param Listing $listing Listing Entity
+     */
+    public function delete(Listing $listing): void
+    {
+        $this->getEntityManager()->remove($listing);
+        $this->getEntityManager()->flush();
+    }
+
     //    /**
     //     * @return Listing[] Returns an array of Listing objects
     //     */

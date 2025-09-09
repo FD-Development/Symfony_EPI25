@@ -39,4 +39,11 @@ interface ListingServiceInterface
      * @param Listing $listing Listing Entity
      */
     public function save(Listing $listing): void;
+
+    /**
+     * Delete entity.
+     *
+     * @param Listing $listing Listing Entity
+     */
+    public function delete(Listing $listing): void;
 }

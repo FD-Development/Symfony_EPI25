@@ -11,6 +11,7 @@ use App\Form\Type\ListingType;
 use App\Service\ListingServiceInterface;
 use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -60,7 +61,7 @@ class ListingController extends AbstractController
     /**
      * View Action.
      *
-     * @param int $listingId Id number
+     * @param int $id Listing id number
      *
      * @return Response HTTP Response
      */
@@ -131,6 +132,38 @@ class ListingController extends AbstractController
 
         return $this->render(
             'listing/update.html.twig',
+            [
+                'form' => $form->createView(),
+                'listing' => $listing,
+            ]
+        );
+    }
+
+    /**
+     * Delete Action.
+     *
+     * @param Request $request HTTP Request
+     * @param Listing $listing Listing Entity
+     *
+     * @return Response HTTP Response
+     */
+    #[Route('listing/delete/{id}', name: 'listing_delete', requirements: ['id' => '[1-9][0-9]*'], methods: 'GET|DELETE')]
+    public function delete(Request $request, Listing $listing): Response
+    {
+        $form = $this->createForm(FormType::class, $listing, [
+            'method' => 'DELETE',
+            'action' => $this->generateUrl('listing_delete', ['id' => $listing->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->listingService->delete($listing);
+
+            return $this->redirectToRoute('listing_index');
+        }
+
+        return $this->render(
+            'listing/delete.html.twig',
             [
                 'form' => $form->createView(),
                 'listing' => $listing,

@@ -91,4 +91,14 @@ class ListingService implements ListingServiceInterface
         }
         $this->listingRepository->save($listing);
     }
+
+    /**
+     * Delete entity.
+     *
+     * @param Listing $listing Listing Entity
+     */
+    public function delete(Listing $listing): void
+    {
+            $this->listingRepository->delete($listing);
+    }
 }
