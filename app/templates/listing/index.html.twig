@@ -14,9 +14,9 @@
             </button>
              {% if categories is defined and categories %}
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item bg-warning" href="{{ url('listings_index') }}">{{ 'button.clearCategory'|trans }}</a></li>
+                <li><a class="dropdown-item bg-warning" href="{{ url('listing_index') }}">{{ 'action.clearCategory'|trans }}</a></li>
                 {% for category in categories %}
-                <li><a class="dropdown-item" href="{{ url('listings_index', {categoryId: category.id}) }}">{{ category.title }}</a></li>
+                <li><a class="dropdown-item" href="{{ url('listing_index', {categoryId: category.id}) }}">{{ category.title }}</a></li>
                 {% endfor %}
             </ul>
             {% endif %}

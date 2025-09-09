@@ -40,7 +40,7 @@ class ListingController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('', name: 'listings_index', methods: ['GET'])]
+    #[Route('', name: 'listing_index', methods: ['GET'])]
     public function index(#[MapQueryParameter] int $page = 1, #[MapQueryParameter('categoryId')] ?int $categoryId = null): Response
     {
 
@@ -64,10 +64,10 @@ class ListingController extends AbstractController
      *
      * @return Response HTTP Response
      */
-    #[Route('/listing/{listingId}', name: 'listings_view', requirements: ['listingId' => '[1-9][0-9]*'], methods: ['GET'])]
-    public function view(int $listingId): Response
+    #[Route('/listing/{id}', name: 'listing_view', requirements: ['id' => '[1-9][0-9]*'], methods: ['GET'])]
+    public function view(int $id): Response
     {
-        $listing = $this->listingService->getOne($listingId);
+        $listing = $this->listingService->getOne($id);
 
         return $this->render(
             'listing/view.html.twig',
@@ -92,7 +92,7 @@ class ListingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->listingService->save($listing);
 
-            return $this->redirectToRoute('listings_index');
+            return $this->redirectToRoute('listing_index');
         }
 
         return $this->render(
