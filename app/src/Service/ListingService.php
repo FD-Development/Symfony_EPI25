@@ -6,6 +6,7 @@
 
 namespace App\Service;
 
+use App\Entity\Listing;
 use App\Repository\ListingRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -62,5 +63,17 @@ class ListingService implements ListingServiceInterface
                 'defaultSortDirection' => 'desc',
             ]
         );
+    }
+
+    /**
+     * Get Listing by Id.
+     *
+     * @param int $id Listing id
+     *
+     * @return Listing Listing Entity
+     */
+    public function getOne(int $id): Listing
+    {
+        return $this->listingRepository->queryById($id);
     }
 }

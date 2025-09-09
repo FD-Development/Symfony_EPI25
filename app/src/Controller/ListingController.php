@@ -23,7 +23,8 @@ class ListingController extends AbstractController
     /**
      * Constructor.
      *
-     * @param ListingServiceInterface $listingService Listing Service
+     * @param ListingServiceInterface  $listingService  Listing Service
+     * @param CategoryServiceInterface $categoryService Category Service
      */
     public function __construct(private readonly ListingServiceInterface $listingService, private readonly CategoryServiceInterface $categoryService)
     {
@@ -53,4 +54,23 @@ class ListingController extends AbstractController
             ]
         );
     }
+
+    /**
+     * View Action.
+     *
+     * @param int $listingId Id number
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/listing/{listingId}', name: 'listings_view', requirements: ['listingId' => '[1-9][0-9]*'], methods: ['GET'])]
+    public function view(int $listingId): Response
+    {
+        $listing = $this->listingService->getOne($listingId);
+
+        return $this->render(
+            'listing/view.html.twig',
+            ['listing' => $listing]
+        );
+    }
+
 }

@@ -61,7 +61,7 @@ class ListingControllerTest extends WebTestCase
         $client = static::createClient();
 
         // when
-        $client->request('GET', '/1');
+        $client->request('GET', '/listing/1');
 
         // then
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

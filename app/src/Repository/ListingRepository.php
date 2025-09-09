@@ -52,7 +52,22 @@ class ListingRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('listing')
             ->andwhere('listing.category = :category')
             ->setParameter('category', $categoryId);
+    }
 
+    /**
+     * Query record by given Id.
+     *
+     * @param int $id Listing Id
+     *
+     * @return Listing Listing Entity
+     */
+    public function queryById(int $id): Listing
+    {
+        return $this->createQueryBuilder('listing')
+            ->andwhere('listing.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getoneOrNullResult();
     }
 
     //    /**
