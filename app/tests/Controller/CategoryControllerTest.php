@@ -54,4 +54,19 @@ class CategoryControllerTest extends WebTestCase
         // then
         $this->assertResponseIsSuccessful();
     }
+
+    /**
+     * Test if route '/category/delete[id]' exists.
+     */
+    public function testCategoryDelete(): void
+    {
+        // assuming Category with id 1 exists
+
+        // given
+        $client = static::createClient();
+        // when
+        $client->request('GET', '/category/delete/1');
+        // then
+        $this->assertResponseIsSuccessful();
+    }
 }

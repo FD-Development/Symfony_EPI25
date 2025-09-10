@@ -10,6 +10,7 @@ use App\Entity\Category;
 use App\Form\Type\CategoryType;
 use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -103,6 +104,38 @@ class CategoryController extends AbstractController
 
         return $this->render(
             'category/update.html.twig',
+            [
+                'form' => $form->createView(),
+                'category' => $category,
+            ]
+        );
+    }
+
+    /**
+     * Delete Action.
+     *
+     * @param Request  $request  HTTP Request
+     * @param Category $category Category Entity
+     *
+     * @return Response HTTP Response
+     */
+    #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '[1-9][0-9]*'], methods: 'GET|DELETE')]
+    public function delete(Request $request, Category $category): Response
+    {
+        $form = $this->createForm(FormType::class, $category, [
+            'method' => 'DELETE',
+            'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->categoryService->delete($category);
+
+            return $this->redirectToRoute('category_index');
+        }
+
+        return $this->render(
+            'category/delete.html.twig',
             [
                 'form' => $form->createView(),
                 'category' => $category,
