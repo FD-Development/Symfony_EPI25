@@ -18,11 +18,24 @@ class CategoryControllerTest extends WebTestCase
      */
     public function testCategoryPage(): void
     {
-        //given
+        // given
         $client = static::createClient();
-        //when
+        // when
         $client->request('GET', '/category');
-        //then
+        // then
+        $this->assertResponseIsSuccessful();
+    }
+
+    /**
+     * Tests if route '/category/create'  exists.
+     */
+    public function testCategoryCreate(): void
+    {
+        // given
+        $client = static::createClient();
+        // when
+        $client->request('GET', '/category/create');
+        // then
         $this->assertResponseIsSuccessful();
     }
 }

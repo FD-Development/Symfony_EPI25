@@ -6,6 +6,8 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
+
 /**
  * @class CategoryServiceInterface
  */
@@ -17,4 +19,11 @@ interface CategoryServiceInterface
      * @return array Array
      */
     public function getAll(): array;
+
+    /**
+     * Save entity.
+     *
+     * @param Category $category Category Entity
+     */
+    public function save(Category $category): void;
 }

@@ -38,6 +38,17 @@ class CategoryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Save entity.
+     *
+     * @param Category $category Category Entity
+     */
+    public function save(Category $category): void
+    {
+        $this->getEntityManager()->persist($category);
+        $this->getEntityManager()->flush();
+    }
     //    /**
     //     * @return Category[] Returns an array of Category objects
     //     */
