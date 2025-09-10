@@ -11,8 +11,10 @@
         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
             <ul class="navbar-nav">
 
-                <li class="nav-item">
-                    <a href="#" class="btn btn-info">BUTTON</a>
+                <li class="nav-item d-flex flex-column flex-md-row justify-content-evenly gap-4 my-2 mx-auto">
+                    <a href="{{ url('listing_index') }}" class="btn btn-info">{{ 'action.go_to_listings'|trans }}</a>
+                    <a href="{{ url('category_index') }}" class="btn btn-warning">{{ 'action.go_to_categories'|trans }}</a>
+                    <a href="#" class="btn btn-success">{{ 'action.go_to_activation'|trans }}</a>
                 </li>
 
             </ul>

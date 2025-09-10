@@ -2,19 +2,19 @@
 
 {% block content %}
 
-    <div class="row">
+    <div class="row m-4">
         <div class="navigation text-center col">
             {{ knp_pagination_render(listings) }}
         </div>
 
         {# category selector #}
         <div class="dropdown col">
-            <button class="btn btn-secondary dropdown-toggle m-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ 'label.chooseCategoryButton'|trans }}
+            <button class="btn btn-secondary dropdown-toggle my-auto mx-auto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ 'action.filter_by_category'|trans }}
             </button>
              {% if categories is defined and categories %}
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item bg-warning" href="{{ url('listing_index') }}">{{ 'action.clearCategory'|trans }}</a></li>
+                <li><a class="dropdown-item bg-warning" href="{{ url('listing_index') }}">{{ 'action.clear_category_filter'|trans }}</a></li>
                 {% for category in categories %}
                 <li><a class="dropdown-item" href="{{ url('listing_index', {categoryId: category.id}) }}">{{ category.title }}</a></li>
                 {% endfor %}

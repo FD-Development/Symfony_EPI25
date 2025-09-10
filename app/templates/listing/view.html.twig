@@ -2,6 +2,8 @@
 
 {% block content %}
 
+    <a href="{{ url('listing_index') }}" class="btn btn-secondary col-5 my-3 mx-auto">{{ 'action.back_to_list'|trans }}</a>
+
     {% if listing %}
         <div class="card" style="width: 80%; margin: 0 10%;">
             <div class="card-body">
