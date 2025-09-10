@@ -55,8 +55,9 @@ class ListingControllerTest extends WebTestCase
     /**
      * Tests if route `/listing/[id]` exists.
      */
-    public function testListingView(): void
+    public function testListingViewPage(): void
     {
+        // assuming Listing with id 1 exists
         // given
         $client = static::createClient();
 
@@ -66,4 +67,47 @@ class ListingControllerTest extends WebTestCase
         // then
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
+    /*
+    * TODO: Check if user has access to inactive listings => jeżeli ID istnieje, ale np. listing jest nieaktywny albo użytkownik nie ma do niego dostępu
+    */
+
+    /**
+     * Test if route '/listing/update[id]' exists.
+     */
+    public function testListingUpdate(): void
+    {
+        // assuming Listing with id 1 exists
+
+        // given
+        $client = static::createClient();
+
+        // when
+        $client->request('GET', '/listing/update/1');
+
+        // then
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+    /*
+     * TODO: Check if user has access
+     */
+
+    /**
+     * Test if route '/listing/delete[id]' exists.
+     */
+    public function testListingDelete(): void
+    {
+        // assuming Listing with id 1 exists
+
+        // given
+        $client = static::createClient();
+        // when
+        $client->request('GET', '/listing/delete/1');
+        // then
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+    /*
+     * TODO: Check if user has access
+     */
+
 }
