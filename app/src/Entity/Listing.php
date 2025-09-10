@@ -9,6 +9,7 @@ namespace App\Entity;
 use App\Repository\ListingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @class Listing
@@ -29,28 +30,36 @@ class Listing
      * Title.
      */
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 10, max: 50)]
     private ?string $title = null;
 
     /**
      * Description.
      */
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Type('string')]
+    #[Assert\Length(max: 500)]
     private ?string $description = null;
 
     /**
      * Created at datetime.
      */
+    #[Assert\Type(\DateTimeImmutable::class)]
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
     /**
      * Activated at datetime.
      */
+    #[Assert\Type(\DateTimeImmutable::class)]
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $activatedAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[Assert\Type(Category::class)]
+    #[Assert\NotBlank]
     private ?Category $category = null;
 
     /**
@@ -161,6 +170,8 @@ class Listing
 
     /**
      * Getter for assigned Category.
+     *
+     * @return Category|null Category Entity or Null
      */
     public function getCategory(): ?Category
     {

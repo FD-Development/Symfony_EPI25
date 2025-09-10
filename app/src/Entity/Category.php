@@ -8,6 +8,7 @@ namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @class Category.
@@ -29,6 +30,8 @@ class Category
      * Title.
      */
     #[ORM\Column(length: 64)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 64)]
     private ?string $title = null;
 
     /**
