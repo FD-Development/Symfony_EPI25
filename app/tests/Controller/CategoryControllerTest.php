@@ -38,4 +38,20 @@ class CategoryControllerTest extends WebTestCase
         // then
         $this->assertResponseIsSuccessful();
     }
+
+    /**
+     * Tests if route `/category/update/[id]` exists.
+     */
+    public function testCategoryUpdate(): void
+    {
+        // assuming Category with id 1 exists
+        // given
+        $client = static::createClient();
+
+        // when
+        $client->request('GET', '/category/update/1');
+
+        // then
+        $this->assertResponseIsSuccessful();
+    }
 }

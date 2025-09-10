@@ -72,4 +72,41 @@ class CategoryController extends AbstractController
             ['form' => $form->createView()]
         );
     }
+
+    /**
+     * Update Action.
+     *
+     * @param Request  $request  HTTP Request
+     * @param Category $category Category Entity
+     *
+     * @return Response HTTP Response
+     */
+    #[Route('/update/{id}', name: 'update', requirements: ['id' => '[1-9][0-9]*'], methods: ['GET|PUT'])]
+    public function update(Request $request, Category $category): Response
+    {
+        $form = $this->createForm(
+            CategoryType::class,
+            $category,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('category_update', ['id' => $category->getId()]),
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->categoryService->save($category);
+
+            return $this->redirectToRoute('category_index');
+        }
+
+        return $this->render(
+            'category/update.html.twig',
+            [
+                'form' => $form->createView(),
+                'category' => $category,
+            ]
+        );
+    }
 }
