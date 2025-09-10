@@ -34,7 +34,7 @@ class CategoryRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('category')
             ->select('category')
-            // ->orderBy('category.title', 'ASC')
+            ->orderBy('category.title', 'ASC')
             ->getQuery()
             ->getResult();
     }
