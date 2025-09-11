@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  *  @class ListingController.
@@ -26,10 +27,11 @@ class ListingController extends AbstractController
     /**
      * Constructor.
      *
-     * @param ListingServiceInterface  $listingService  Listing Service
+     * @param ListingServiceInterface $listingService Listing Service
      * @param CategoryServiceInterface $categoryService Category Service
+     * @param TranslatorInterface $translator Translation Interface
      */
-    public function __construct(private readonly ListingServiceInterface $listingService, private readonly CategoryServiceInterface $categoryService)
+    public function __construct(private readonly ListingServiceInterface $listingService, private readonly CategoryServiceInterface $categoryService,  private readonly TranslatorInterface $translator)
     {
     }
 
@@ -126,6 +128,11 @@ class ListingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->listingService->save($listing);
 
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
             return $this->redirectToRoute('listing_index');
         }
 
@@ -160,6 +167,11 @@ class ListingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->listingService->save($listing);
 
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.update_successfully')
+            );
+
             return $this->redirectToRoute('listing_view', ['id' => $listing->getId()]);
         }
 
@@ -191,6 +203,11 @@ class ListingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->listingService->delete($listing);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
 
             return $this->redirectToRoute('listing_index');
         }
@@ -225,6 +242,11 @@ class ListingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->listingService->activate($listing);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.activated_successfully')
+            );
 
             return $this->redirectToRoute('listing_view', ['id' => $listing->getId()]);
         }

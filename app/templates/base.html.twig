@@ -27,6 +27,16 @@
         {% endblock %}
         </header>
 
+        <div class="container-fluid m-3">
+            {% for type, messages in app.session.flashBag.all %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
 
         <div class="row my-4 mx-2 mx-md-5 px-md-5">{% block content %}{% endblock %}</div>
 
