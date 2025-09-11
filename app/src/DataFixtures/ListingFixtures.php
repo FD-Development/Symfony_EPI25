@@ -50,7 +50,7 @@ class ListingFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             $this->manager->persist($listing);
         }
 
-        $this->createMany(100, 'listing', function (int $i) {
+        $this->createMany(50, 'listing', function (int $i) {
             $listing = new Listing();
             $listing->setTitle($this->faker->words(3, true));
             $listing->setDescription($this->faker->text());
@@ -60,6 +60,20 @@ class ListingFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             $listing->setActivatedAt(
                 \DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-12 days', '-1 days'))
             );
+            $category = $this->getRandomReference('category', Category::class);
+            $listing->setCategory($category);
+
+            return $listing;
+        });
+
+        $this->createMany(50, 'listing', function (int $i) {
+            $listing = new Listing();
+            $listing->setTitle($this->faker->words(3, true));
+            $listing->setDescription($this->faker->text());
+            $listing->setCreatedAt(
+                \DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-12 days', '-1 days'))
+            );
+            $listing->setActivatedAt(null);
             $category = $this->getRandomReference('category', Category::class);
             $listing->setCategory($category);
 
