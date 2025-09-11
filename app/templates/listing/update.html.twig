@@ -1,6 +1,6 @@
-{% extends '/components/form_base.html.twig' %}
-
-{% block form_title %}{{ 'title.listing_update'|trans({'%id%': listing.id|default('')}) }}{% endblock %}
-{% block form_submit_value %}{{ 'action.save_changes'|trans }}{% endblock %}
-{% block form_return_url %}{{ url('listing_index') }}{% endblock %}
-{% block form_return_button %}{{ 'action.back_to_list'|trans }}{% endblock %}
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.listing_update'|trans,
+    form: form,
+    submit_label: 'action.save_changes'|trans,
+    back_to_list_path: 'listing_index',
+} %}

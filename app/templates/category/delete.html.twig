@@ -1,6 +1,6 @@
-{% extends '/components/form_base.html.twig' %}
-
-{% block form_title %}{{ 'title.category_delete'|trans }}{% endblock %}
-{% block form_submit_value %}{{ 'action.delete'|trans }}{% endblock %}
-{% block form_return_url %}{{ url('category_index') }}{% endblock %}
-{% block form_return_button %}{{ 'action.back_to_list'|trans }}{% endblock %}
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.category_delete'|trans,
+    form: form,
+    submit_label: 'action.delete'|trans,
+    back_to_list_path: 'category_index',
+} %}
