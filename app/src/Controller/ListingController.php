@@ -203,4 +203,34 @@ class ListingController extends AbstractController
             ]
         );
     }
+
+    /**
+     * Activate Action.
+     *
+     * @param Request $request HTTP Request
+     * @param Listing $listing Listing Entity
+     *
+     * @return Response HTTP Response
+     */
+    #[Route('listing/activate/{id}', name: 'listing_activate', requirements: ['id' => '[1-9][0-9]*'], methods: 'GET|POST')]
+    public function activate(Request $request, Listing $listing): Response
+    {
+        $form = $this->createFormBuilder($listing, [
+            'method' => 'POST',
+            'action' => $this->generateUrl('listing_activate', ['id' => $listing->getId()]),
+        ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->listingService->activate($listing);
+
+            return $this->redirectToRoute('listing_view', ['id' => $listing->getId()]);
+        }
+
+        return $this->render('listing/activate.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }

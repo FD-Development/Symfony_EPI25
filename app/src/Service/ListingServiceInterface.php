@@ -51,6 +51,13 @@ interface ListingServiceInterface
     public function save(Listing $listing): void;
 
     /**
+     * Activate listing.
+     *
+     * @param Listing $listing Listing Entity
+     */
+    public function activate(Listing $listing): void;
+
+    /**
      * Delete entity.
      *
      * @param Listing $listing Listing Entity

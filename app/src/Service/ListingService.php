@@ -121,6 +121,17 @@ class ListingService implements ListingServiceInterface
     }
 
     /**
+     * Activate listing.
+     *
+     * @param Listing $listing Listing Entity
+     */
+    public function activate(Listing $listing): void
+    {
+        $listing->setActivatedAt(new \DateTimeImmutable());
+        $this->listingRepository->save($listing);
+    }
+
+    /**
      * Delete entity.
      *
      * @param Listing $listing Listing Entity
