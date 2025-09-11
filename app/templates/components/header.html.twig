@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         {# Nav-brand-button #}
-        <a href="#" class="navbar-brand" >Navbar</a>
+        <a class="ms-1 navbar-brand" >Listing Harbour</a>
         {# Nav-hamburger-toggle #}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,13 +10,21 @@
         {# Nav-items #}
         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
 
-            <ul class="navbar-nav">
-                <li class="nav-item d-flex flex-column flex-md-row justify-content-evenly gap-4 my-2 mx-auto">
-                    <a href="{{ url('listing_create') }}" class="btn btn-primary">{{ 'action.listing_create'|trans }}</a>
-                    <a href="{{ url('listing_index') }}" class="btn btn-info">{{ 'action.go_to_listings'|trans }}</a>
-                    <a href="{{ url('category_index') }}" class="btn btn-warning">{{ 'action.go_to_categories'|trans }}</a>
-                    <a href="{{ url('listing_index_activate') }}" class="btn btn-success">{{ 'action.go_to_activation'|trans }}</a>
+            <ul class="navbar-nav d-flex flex-column flex-md-row justify-content-evenly align-items-center gap-4 my-2 mx-auto">
+                <li class="nav-item"><a href="{{ url('listing_create') }}" class="nav-link">{{ 'action.listing_create'|trans }}</a></li>
+                <li class="nav-item"><a href="{{ url('listing_index') }}" class="nav-link">{{ 'action.go_to_listings'|trans }}</a></li>
+                <li class="nav-item"><a href="{{ url('category_index') }}" class="nav-link">{{ 'action.go_to_categories'|trans }}</a></li>
+                <li class="nav-item"><a href="{{ url('listing_index_activate') }}" class="nav-link">{{ 'action.go_to_activation'|trans }}</a></li>
+                <li class="nav-item ms-md-5 p-auto d-flex flex-column align-items-center">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a class="text-break bd-highlight text fw-normal text-info text-decoration-none">{{ app.user.username }}</a>
+                            <a href="{{ url('app_logout') }}" class="nav-link" >{{ 'action.logout'|trans }}</a>
+                    {% else %}
+                            <a href="{{ url('app_login') }}" class="nav-link">{{ 'action.login'|trans }}</a>
+
+                    {% endif %}
                 </li>
+
 
             </ul>
         </div>

@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ 'title.category_index'|trans }}{% endblock %}
+
 {% block content %}
 
-    <div class="row m-4">
+    <div>
     <div class="navigation text-center m-3 col">
         <a class="btn btn-primary" href="{{ url('category_create') }}" >{{ 'action.category_create'|trans }}</a>
     </div>
 
 {% if categories is defined and categories %}
-<table class="table text-center">
+<table class="table text-center" style="vertical-align: middle;">
     <thead>
         <tr>
             <th scope="col">{{ 'label.title'|trans }}</th>

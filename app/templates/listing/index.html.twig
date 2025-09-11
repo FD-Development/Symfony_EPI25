@@ -1,15 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ 'listing_index'|trans }}{% endblock %}
+
 {% block content %}
 
-    <div class="row m-4">
-        <div class="navigation text-center col">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-content-center">
+        <div class="navigation">
             {{ knp_pagination_render(listings) }}
         </div>
 
         {# category selector #}
-        <div class="dropdown col d-flex flex-column">
-            <button class="btn btn-secondary dropdown-toggle my-auto mx-auto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown d-flex flex-column">
+            <button class="btn btn-secondary dropdown-toggle mx-auto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ 'action.filter_by_category'|trans }}
             </button>
             {% if selectedCategory is defined and selectedCategory %}
@@ -29,7 +31,7 @@
     </div>
 
 {% if listings is defined and listings.items|length %}
-    <table class="table">
+    <table class="table m-2">
      <thead>
          <tr>
              <th scope="col">{{ knp_pagination_sortable(listings, 'label.title'|trans, 'listing.title') }}</th>

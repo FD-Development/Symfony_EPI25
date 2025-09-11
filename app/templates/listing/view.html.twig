@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ 'listing_view'|trans }}{% endblock %}
+
 {% block content %}
 
     <a href="{{ url('listing_index') }}" class="btn btn-secondary col-5 my-3 mx-auto">{{ 'action.back_to_list'|trans }}</a>
