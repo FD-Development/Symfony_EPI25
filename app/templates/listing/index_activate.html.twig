@@ -40,7 +40,7 @@
             <tbody>
             {% for listing in listings.items %}
                 <tr>
-                    <td>{{ listing.title }}</td>
+                    <td><a href="{{ url('listing_view', {id:listing.id}) }}">{{ listing.title }}</a></td>
                     <td>{{ listing.createdAt|date('d.m.Y') }}</td>
                 </tr>
             {% endfor %}

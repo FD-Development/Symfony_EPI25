@@ -40,8 +40,8 @@
      <tbody>
         {% for listing in listings.items %}
             <tr>
-                <td>{{ listing.title }}</td>
-                <td>{{ listing.activatedAt|date('d.m.Y') }}</td>
+                <td><a href="{{ url('listing_view', {id:listing.id}) }}">{{ listing.title }}</a></td>
+                <td><a>{{ listing.activatedAt|date('d.m.Y') }}</a></td>
             </tr>
         {% endfor %}
      </tbody>
