@@ -116,7 +116,7 @@ class ListingController extends AbstractController
      *
      * @return Response HTTP Response
      */
-    #[Route('/listing/create', name: 'listings_create', methods: ['GET|POST'])]
+    #[Route('/listing/create', name: 'listing_create', methods: ['GET|POST'])]
     public function create(Request $request): Response
     {
         $listing = new Listing();
