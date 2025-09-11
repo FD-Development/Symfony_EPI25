@@ -50,7 +50,7 @@ class ListingFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             $this->manager->persist($listing);
         }
 
-        $this->createMany(50, 'listing', function (int $i) {
+        $this->createMany(50, 'listing_active', function (int $i) {
             $listing = new Listing();
             $listing->setTitle($this->faker->words(3, true));
             $listing->setDescription($this->faker->text());
@@ -66,7 +66,7 @@ class ListingFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             return $listing;
         });
 
-        $this->createMany(50, 'listing', function (int $i) {
+        $this->createMany(50, 'listing_inactive', function (int $i) {
             $listing = new Listing();
             $listing->setTitle($this->faker->words(3, true));
             $listing->setDescription($this->faker->text());
