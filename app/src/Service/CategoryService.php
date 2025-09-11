@@ -34,6 +34,18 @@ class CategoryService implements CategoryServiceInterface
     }
 
     /**
+     * Get Category by Id.
+     *
+     * @param int $id Category id
+     *
+     * @return Category|null Category Entity
+     */
+    public function getOne(int $id): ?Category
+    {
+        return $this->categoryRepository->queryById($id);
+    }
+
+    /**
      * Save entity.
      *
      * @param Category $category Category Entity

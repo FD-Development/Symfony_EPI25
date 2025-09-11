@@ -8,10 +8,14 @@
         </div>
 
         {# category selector #}
-        <div class="dropdown col">
+        <div class="dropdown col d-flex flex-column">
             <button class="btn btn-secondary dropdown-toggle my-auto mx-auto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ 'action.filter_by_category'|trans }}
             </button>
+            {% if selectedCategory is defined and selectedCategory %}
+                <p class="border border-2 rounded-bottom bg-warning px-3 py-1 mx-auto">{{ selectedCategory.title }}</p>
+            {% endif %}
+
             {% if categories is defined and categories %}
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item bg-warning" href="{{ url('listing_index_activate') }}">{{ 'action.clear_category_filter'|trans }}</a></li>

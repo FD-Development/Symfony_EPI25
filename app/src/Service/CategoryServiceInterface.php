@@ -21,6 +21,15 @@ interface CategoryServiceInterface
     public function getAll(): array;
 
     /**
+     * Get Category by Id.
+     *
+     * @param int $id Category id
+     *
+     * @return Category|null Category Entity
+     */
+    public function getOne(int $id): ?Category;
+
+    /**
      * Save entity.
      *
      * @param Category $category Category Entity

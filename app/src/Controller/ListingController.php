@@ -47,11 +47,17 @@ class ListingController extends AbstractController
         $pagination = $this->listingService->getActivatedPaginatedListings($page, $categoryId);
         $categories = $this->categoryService->getAll();
 
+        $selectedCategory = null;
+        if ($categoryId) {
+            $selectedCategory = $this->categoryService->getOne($categoryId);
+        }
+
         return $this->render(
             'listing/index.html.twig',
             [
                 'listings' => $pagination,
                 'categories' => $categories,
+                'selectedCategory' => $selectedCategory,
             ]
         );
     }
@@ -70,11 +76,17 @@ class ListingController extends AbstractController
         $pagination = $this->listingService->getNonActivatedPaginatedListings($page, $categoryId);
         $categories = $this->categoryService->getAll();
 
+        $selectedCategory = null;
+        if ($categoryId) {
+            $selectedCategory = $this->categoryService->getOne($categoryId);
+        }
+
         return $this->render(
             'listing/index_activate.html.twig',
             [
                 'listings' => $pagination,
                 'categories' => $categories,
+                'selectedCategory' => $selectedCategory,
             ]
         );
     }

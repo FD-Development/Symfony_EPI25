@@ -40,6 +40,22 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
+     * Query record by given Id.
+     *
+     * @param int $id Category Id
+     *
+     * @return Category|null Category Entity
+     */
+    public function queryById(int $id): ?Category
+    {
+        return $this->createQueryBuilder('category')
+            ->andwhere('category.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getoneOrNullResult();
+    }
+
+    /**
      * Save entity.
      *
      * @param Category $category Category Entity
