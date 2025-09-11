@@ -22,7 +22,7 @@ interface ListingServiceInterface
      *
      * @return PaginationInterface Pagination Interface
      */
-    public function getPaginatedListings(int $page, ?int $categoryId): PaginationInterface;
+    public function getActivatedPaginatedListings(int $page, ?int $categoryId): PaginationInterface;
 
     /**
      * Get Listing by Id.

@@ -29,29 +29,48 @@ class ListingRepository extends ServiceEntityRepository
     }
 
     /**
-     * Query all records.
+     * Query all records that have or don't have activatedAt value.
+     *
+     * @param bool $active Bool active
      *
      * @return QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(bool $active): QueryBuilder
     {
-        return $this->createQueryBuilder('listing')
-        ->select('listing', 'category')
-        ->leftJoin('listing.category', 'category');
+        $qb = $this->createQueryBuilder('listing')
+            ->select('listing', 'category')
+            ->leftJoin('listing.category', 'category');
+
+        if ($active) {
+            $qb->andWhere('listing.activatedAt IS NOT NULL');
+        } else {
+            $qb->andWhere('listing.activatedAt IS NULL');
+        }
+
+        return $qb;
     }
 
     /**
-     * Query all records by given category Id.
+     * Query all records that have or don't have activatedAt value with given category Id.
      *
-     * @param int $categoryId Category Id
+     * @param int  $categoryId Category Id
+     * @param bool $active     Bool active
      *
      * @return QueryBuilder Query builder
      */
-    public function queryAllByCategory(int $categoryId): QueryBuilder
+    public function queryAllByCategory(int $categoryId, bool $active): QueryBuilder
     {
-        return $this->createQueryBuilder('listing')
+        $qb = $this->createQueryBuilder('listing')
             ->andwhere('listing.category = :category')
             ->setParameter('category', $categoryId);
+
+        if ($active) {
+            $qb->andWhere('listing.activatedAt IS NOT NULL');
+        } else {
+            $qb->andWhere('listing.activatedAt IS NULL');
+        }
+
+        return $qb;
     }
 
     /**

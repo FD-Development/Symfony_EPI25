@@ -45,12 +45,12 @@ class ListingService implements ListingServiceInterface
      *
      * @return PaginationInterface Pagination Interface
      */
-    public function getPaginatedListings(int $page, ?int $categoryId): PaginationInterface
+    public function getActivatedPaginatedListings(int $page, ?int $categoryId): PaginationInterface
     {
         if (null !== $categoryId) {
-            $query = $this->listingRepository->queryAllByCategory($categoryId);
+            $query = $this->listingRepository->queryAllByCategory($categoryId, true);
         } else {
-            $query = $this->listingRepository->queryAll();
+            $query = $this->listingRepository->queryAll(true);
         }
 
         return $this->paginator->paginate(
@@ -99,6 +99,6 @@ class ListingService implements ListingServiceInterface
      */
     public function delete(Listing $listing): void
     {
-            $this->listingRepository->delete($listing);
+        $this->listingRepository->delete($listing);
     }
 }

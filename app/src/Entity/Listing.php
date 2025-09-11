@@ -181,6 +181,8 @@ class Listing
     /**
      * Setter for Category.
      *
+     * @param Category|null $category Category Entity
+     *
      * @return $this
      */
     public function setCategory(?Category $category): static

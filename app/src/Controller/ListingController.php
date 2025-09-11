@@ -8,8 +8,8 @@ namespace App\Controller;
 
 use App\Entity\Listing;
 use App\Form\Type\ListingType;
-use App\Service\ListingServiceInterface;
 use App\Service\CategoryServiceInterface;
+use App\Service\ListingServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,10 +44,8 @@ class ListingController extends AbstractController
     #[Route('', name: 'listing_index', methods: ['GET'])]
     public function index(#[MapQueryParameter] int $page = 1, #[MapQueryParameter('categoryId')] ?int $categoryId = null): Response
     {
-
-        $pagination = $this->listingService->getPaginatedListings($page, $categoryId);
+        $pagination = $this->listingService->getActivatedPaginatedListings($page, $categoryId);
         $categories = $this->categoryService->getAll();
-
 
         return $this->render(
             'listing/index.html.twig',
@@ -110,7 +108,7 @@ class ListingController extends AbstractController
      *
      * @return Response HTTP Response
      */
-    #[Route('/listing/update/{id}', name:'listing_update', requirements: ['id' => '[1-9][0-9]*'], methods: ['GET|PUT'])]
+    #[Route('/listing/update/{id}', name: 'listing_update', requirements: ['id' => '[1-9][0-9]*'], methods: ['GET|PUT'])]
     public function update(Request $request, Listing $listing): Response
     {
         $form = $this->createForm(
