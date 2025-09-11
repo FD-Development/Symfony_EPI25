@@ -57,6 +57,29 @@ class ListingController extends AbstractController
     }
 
     /**
+     * Activate Index Action.
+     *
+     * @param int      $page       Page number
+     * @param int|null $categoryId Category Id
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/activate', name: 'listing_index_activate', methods: ['GET'])]
+    public function indexActivate(#[MapQueryParameter] int $page = 1, #[MapQueryParameter('categoryId')] ?int $categoryId = null): Response
+    {
+        $pagination = $this->listingService->getNonActivatedPaginatedListings($page, $categoryId);
+        $categories = $this->categoryService->getAll();
+
+        return $this->render(
+            'listing/index_activate.html.twig',
+            [
+                'listings' => $pagination,
+                'categories' => $categories,
+            ]
+        );
+    }
+
+    /**
      * View Action.
      *
      * @param int $id Listing id number

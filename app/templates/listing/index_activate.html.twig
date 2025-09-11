@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="row m-4">
+        <div class="navigation text-center col">
+            {{ knp_pagination_render(listings) }}
+        </div>
+
+        {# category selector #}
+        <div class="dropdown col">
+            <button class="btn btn-secondary dropdown-toggle my-auto mx-auto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ 'action.filter_by_category'|trans }}
+            </button>
+            {% if categories is defined and categories %}
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item bg-warning" href="{{ url('listing_index_activate') }}">{{ 'action.clear_category_filter'|trans }}</a></li>
+                    {% for category in categories %}
+                        <li><a class="dropdown-item" href="{{ url('listing_index_activate', {categoryId: category.id}) }}">{{ category.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+    </div>
+
+    {% if listings is defined and listings.items|length %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">{{ knp_pagination_sortable(listings, 'label.title'|trans, 'listing.title') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(listings, 'label.createdAt'|trans, 'listing.createdAt') }}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for listing in listings.items %}
+                <tr>
+                    <td>{{ listing.title }}</td>
+                    <td>{{ listing.createdAt|date('d.m.Y') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(listings) }}
+        </div>
+
+
+
+    {% else %}
+        <p>{{ 'message.empty_list'|trans }}</p>
+    {% endif %}
+
+{% endblock %}

@@ -38,7 +38,7 @@ class ListingService implements ListingServiceInterface
     }
 
     /**
-     * Get paginated listings able to be filtered with category.
+     * Get paginated active listings able to be filtered with category.
      *
      * @param int      $page       Page number
      * @param int|null $categoryId Category Id
@@ -61,6 +61,34 @@ class ListingService implements ListingServiceInterface
                 'sortFieldAllowList' => ['listing.title', 'listing.activatedAt'],
                 'defaultSortFieldName' => 'listing.activatedAt',
                 'defaultSortDirection' => 'desc',
+            ]
+        );
+    }
+
+    /**
+     * Get paginated nonactive listings able to be filtered with category.
+     *
+     * @param int      $page       Page number
+     * @param int|null $categoryId Category Id
+     *
+     * @return PaginationInterface Pagination Interface
+     */
+    public function getNonActivatedPaginatedListings(int $page, ?int $categoryId): PaginationInterface
+    {
+        if (null !== $categoryId) {
+            $query = $this->listingRepository->queryAllByCategory($categoryId, false);
+        } else {
+            $query = $this->listingRepository->queryAll(false);
+        }
+
+        return $this->paginator->paginate(
+            $query,
+            $page,
+            self::PAGINATOR_ITEMS_PER_PAGE,
+            [
+                'sortFieldAllowList' => ['listing.title', 'listing.createdAt'],
+                'defaultSortFieldName' => 'listing.createdAt',
+                'defaultSortDirection' => 'asc',
             ]
         );
     }
