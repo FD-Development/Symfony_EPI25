@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -27,11 +28,11 @@ class ListingController extends AbstractController
     /**
      * Constructor.
      *
-     * @param ListingServiceInterface $listingService Listing Service
+     * @param ListingServiceInterface  $listingService  Listing Service
      * @param CategoryServiceInterface $categoryService Category Service
-     * @param TranslatorInterface $translator Translation Interface
+     * @param TranslatorInterface      $translator      Translation Interface
      */
-    public function __construct(private readonly ListingServiceInterface $listingService, private readonly CategoryServiceInterface $categoryService,  private readonly TranslatorInterface $translator)
+    public function __construct(private readonly ListingServiceInterface $listingService, private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
     {
     }
 
@@ -72,6 +73,7 @@ class ListingController extends AbstractController
      *
      * @return Response HTTP response
      */
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/activate', name: 'listing_index_activate', methods: ['GET'])]
     public function indexActivate(#[MapQueryParameter] int $page = 1, #[MapQueryParameter('categoryId')] ?int $categoryId = null): Response
     {
@@ -150,6 +152,7 @@ class ListingController extends AbstractController
      *
      * @return Response HTTP Response
      */
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/listing/update/{id}', name: 'listing_update', requirements: ['id' => '[1-9][0-9]*'], methods: ['GET|PUT'])]
     public function update(Request $request, Listing $listing): Response
     {
@@ -192,6 +195,7 @@ class ListingController extends AbstractController
      *
      * @return Response HTTP Response
      */
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('listing/delete/{id}', name: 'listing_delete', requirements: ['id' => '[1-9][0-9]*'], methods: 'GET|DELETE')]
     public function delete(Request $request, Listing $listing): Response
     {
@@ -229,6 +233,7 @@ class ListingController extends AbstractController
      *
      * @return Response HTTP Response
      */
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('listing/activate/{id}', name: 'listing_activate', requirements: ['id' => '[1-9][0-9]*'], methods: 'GET|POST')]
     public function activate(Request $request, Listing $listing): Response
     {

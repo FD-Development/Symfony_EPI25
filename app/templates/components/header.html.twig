@@ -12,9 +12,11 @@
 
             <ul class="navbar-nav d-flex flex-column flex-md-row justify-content-evenly align-items-center gap-4 my-2 mx-auto">
                 <li class="nav-item"><a href="{{ url('listing_create') }}" class="nav-link">{{ 'action.listing_create'|trans }}</a></li>
-                <li class="nav-item"><a href="{{ url('listing_index') }}" class="nav-link">{{ 'action.go_to_listings'|trans }}</a></li>
-                <li class="nav-item"><a href="{{ url('category_index') }}" class="nav-link">{{ 'action.go_to_categories'|trans }}</a></li>
-                <li class="nav-item"><a href="{{ url('listing_index_activate') }}" class="nav-link">{{ 'action.go_to_activation'|trans }}</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item"><a href="{{ url('listing_index') }}" class="nav-link">{{ 'action.go_to_listings'|trans }}</a></li>
+                    <li class="nav-item"><a href="{{ url('category_index') }}" class="nav-link">{{ 'action.go_to_categories'|trans }}</a></li>
+                    <li class="nav-item"><a href="{{ url('listing_index_activate') }}" class="nav-link">{{ 'action.go_to_activation'|trans }}</a></li>
+                {% endif%}
                 <li class="nav-item ms-md-5 p-auto d-flex flex-column align-items-center">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <a class="text-break bd-highlight text fw-normal text-info text-decoration-none">{{ app.user.username }}</a>

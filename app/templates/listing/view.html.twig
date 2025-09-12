@@ -7,20 +7,25 @@
     <a href="{{ url('listing_index') }}" class="btn btn-secondary col-5 my-3 mx-auto">{{ 'action.back_to_list'|trans }}</a>
 
     {% if listing %}
-        <div class="card row" style="width: 80%; margin: 0 10%;">
-            <div class="card-body">
+        <div class="card row p-0" style="width: 80%; margin: 0 10%;">
+            <div class="card-header">
+                {{ listing.category.title }}
+            </div>
+            <div class="card-body text-center">
                 <h1 class="card-title">{{ listing.title }}</h1>
-                <h6 class="card-subtitle mb-2 text-body-secondary">
-                    {% if listing.activatedAt %}
-                        {{ 'label.activatedAt'|trans }}: {{ listing.activatedAt|date('d.m.Y') }}
-                    {% else %}
-                        {{ 'label.createdAt'|trans }}: {{ listing.createdAt|date('d.m.Y') }}
-                    {% endif %}
-                </h6>
+                {# <h6 class="card-subtitle mb-2 text-body-secondary"></h6> #}
                 <p class="card-text">{{ listing.description }}</p>
             </div>
+            <h6 class="card-footer p-2 mb-0 text-muted">
+                {% if listing.activatedAt %}
+                    {{ 'label.activatedAt'|trans }}: {{ listing.activatedAt|date('d.m.Y') }}
+                {% else %}
+                    {{ 'label.createdAt'|trans }}: {{ listing.createdAt|date('d.m.Y') }}
+                {% endif %}
+            </h6>
         </div>
 
+        {% if is_granted('ROLE_ADMIN') %}
         <div class="d-flex justify-content-center gap-2 my-2 mx-auto p-2 w-auto border border-secondary rounded-4 border-3 bg-secondary bg-opacity-50">
                 <a class="btn btn-primary" href="{{ url('listing_update', {id:listing.id}) }}" >{{ 'action.listing_update'|trans }}</a>
             {% if not listing.activatedAt %}
@@ -28,8 +33,11 @@
             {% endif %}
                 <a class="btn btn-danger" href="{{ url('listing_delete', {id:listing.id}) }}" >{{ 'action.listing_delete'|trans }}</a>
         </div>
+        {% endif %}
+
 
     {% else %}
+
         <p>{{ 'message.listing_not_found'|trans }}</p>
 
     {% endif %}
