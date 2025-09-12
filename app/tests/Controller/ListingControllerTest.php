@@ -6,7 +6,9 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\User;
 use App\Service\ListingService;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -17,7 +19,7 @@ class ListingControllerTest extends WebTestCase
     /**
      * Test '/' route.
      */
-    public function testListingPage(): void
+    public function testListingIndexPage(): void
     {
         // given
         $client = static::createClient();
@@ -30,7 +32,7 @@ class ListingControllerTest extends WebTestCase
     /**
      * Tests if user is informed if there are no listings shown.
      */
-    public function testListingPageShowsEmptyMessageWhenNoListings(): void
+    public function testListingInPageShowsEmptyMessageWhenNoListings(): void
     {
         // given
         $client = static::createClient();
@@ -41,7 +43,7 @@ class ListingControllerTest extends WebTestCase
 
         /* Service mock */
         $serviceMock = $this->createMock(ListingService::class);
-        $serviceMock->method('getPaginatedListings')->willReturn($pagination);
+        $serviceMock->method('getActivatedPaginatedListings')->willReturn($pagination);
 
 
         static::getContainer()->set(ListingService::class, $serviceMock);
@@ -80,7 +82,7 @@ class ListingControllerTest extends WebTestCase
         // assuming Listing with id 1 exists
 
         // given
-        $client = static::createClient();
+        $client = $this->createAdminClient();
 
         // when
         $client->request('GET', '/listing/update/1');
@@ -100,7 +102,7 @@ class ListingControllerTest extends WebTestCase
         // assuming Listing with id 1 exists
 
         // given
-        $client = static::createClient();
+        $client = $this->createAdminClient();
         // when
         $client->request('GET', '/listing/delete/1');
         // then
@@ -110,4 +112,21 @@ class ListingControllerTest extends WebTestCase
      * TODO: Check if user has access
      */
 
+    /**
+     * Create admin client.
+     *
+     * @return KernelBrowser Kernel Browser
+     */
+    private function createAdminClient(): KernelBrowser
+    {
+        $client = static::createClient();
+
+        $user = self::getContainer()->get('doctrine')
+            ->getRepository(User::class)
+            ->findOneBy(['username' => 'admin_0']);
+
+        $client->loginUser($user);
+
+        return $client;
+    }
 }

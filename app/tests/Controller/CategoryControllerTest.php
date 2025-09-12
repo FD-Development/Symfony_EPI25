@@ -6,6 +6,8 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -19,7 +21,7 @@ class CategoryControllerTest extends WebTestCase
     public function testCategoryPage(): void
     {
         // given
-        $client = static::createClient();
+        $client = $this->createAdminClient();
         // when
         $client->request('GET', '/category');
         // then
@@ -32,7 +34,7 @@ class CategoryControllerTest extends WebTestCase
     public function testCategoryCreate(): void
     {
         // given
-        $client = static::createClient();
+        $client = $this->createAdminClient();
         // when
         $client->request('GET', '/category/create');
         // then
@@ -46,7 +48,7 @@ class CategoryControllerTest extends WebTestCase
     {
         // assuming Category with id 1 exists
         // given
-        $client = static::createClient();
+        $client = $this->createAdminClient();
 
         // when
         $client->request('GET', '/category/update/1');
@@ -63,10 +65,28 @@ class CategoryControllerTest extends WebTestCase
         // assuming Category with id 1 exists
 
         // given
-        $client = static::createClient();
+        $client = $this->createAdminClient();
         // when
         $client->request('GET', '/category/delete/1');
         // then
         $this->assertResponseIsSuccessful();
+    }
+
+    /**
+     * Create admin client.
+     *
+     * @return KernelBrowser Kernel Browser
+     */
+    private function createAdminClient(): KernelBrowser
+    {
+        $client = static::createClient();
+
+        $user = self::getContainer()->get('doctrine')
+            ->getRepository(User::class)
+            ->findOneBy(['username' => 'admin_0']);
+
+        $client->loginUser($user);
+
+        return $client;
     }
 }
