@@ -19,7 +19,7 @@
                 {% endif%}
                 <li class="nav-item ms-md-5 p-auto d-flex flex-column align-items-center">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <a class="text-break bd-highlight text fw-normal text-info text-decoration-none">{{ app.user.username }}</a>
+                            <a href="{{ url('user_view') }}" class="text-break bd-highlight text fw-normal text-info text-decoration-none">{{ app.user.username }}</a>
                             <a href="{{ url('app_logout') }}" class="nav-link" >{{ 'action.logout'|trans }}</a>
                     {% else %}
                             <a href="{{ url('app_login') }}" class="nav-link">{{ 'action.login'|trans }}</a>
