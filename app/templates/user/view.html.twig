@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'user_view'|trans }}{% endblock %}
+
+{% block content %}
+
+        <div class="card row p-0" style="width: 80%; margin: 0 10%;">
+            <div class="card-body text-center">
+                <h1 class="card-title">{{ 'message.already_logged_in'|trans }}: {{ user.userIdentifier }}</h1>
+            </div>
+        </div>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="d-flex justify-content-center gap-2 my-2 mx-auto p-2 w-auto border border-secondary rounded-4 border-3 bg-secondary bg-opacity-50">
+                <a class="btn btn-primary" href="{{ url('user_update', {id:user.id}) }}" >{{ 'action.user_update'|trans }}</a>
+                <a class="btn btn-primary" href="{{ url('password_update', {id:user.id}) }}" >{{ 'action.password_update'|trans }}</a>
+            </div>
+        {% endif %}
+
+{% endblock %}
