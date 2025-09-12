@@ -2,17 +2,21 @@
 
 namespace App\Tests\Service;
 
+use App\Entity\Listing;
+use App\Entity\Category;
 use App\Service\ListingServiceInterface;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @class ListingServiceTest.
- */class ListingServiceTest extends WebTestCase
+ */
+class ListingServiceTest extends WebTestCase
 {
     /**
-     * Tests the filtering listings by category.     */
-    public function testListingFilteredByCategory(): void
+     * Tests the filtering by category of listings.
+     */
+    public function testListingsFilteredByCategory(): void
     {
         $container = static::getContainer();
 
@@ -23,7 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
         $this->assertNotNull($category, 'Kategoria Test 1 musi istnieć. Czy Fixtures zostały załadowane do testowej bazy danych?');
 
         // Act
-        $pagination = $listingService->getPaginatedListings(1, $category->getId());
+        $pagination = $listingService->getActivatedPaginatedListings(1, $category->getId());
 
         // Assert
         $titles = [];
@@ -40,5 +44,34 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
         ];
 
         $this->assertSame($expected, $titles, 'Powinny zwrócić się tylko ogłoszenia z kategorii Test 1.');
+    }
+
+    /**
+     * Tests if Listing gets activated.
+     */
+    public function testIfListingGetsActivated(): void
+    {
+        // given
+        self::bootKernel();
+        $container = static::getContainer();
+        $listingService = $container->get(ListingServiceInterface::class);
+
+        $category = new Category();
+        $category->setTitle('Dummy Category');
+
+        $listing = new Listing();
+        $listing->setTitle('Test activation');
+        $listing->setDescription('Test description');
+        $listing->setCreatedAt(new \DateTimeImmutable());
+        $listing->setActivatedAt(null);
+        $listing->setCategory($category);
+
+
+        // when
+        $listingService->activate($listing);
+
+        // then
+        $this->assertNotNull($listing->getActivatedAt(), 'Listing powinien być aktywowany');
+        $this->assertInstanceOf(\DateTimeImmutable::class, $listing->getActivatedAt());
     }
 }

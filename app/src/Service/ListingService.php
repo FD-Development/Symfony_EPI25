@@ -128,7 +128,6 @@ class ListingService implements ListingServiceInterface
     public function activate(Listing $listing): void
     {
         $listing->setActivatedAt(new \DateTimeImmutable());
-        $this->listingRepository->save($listing);
     }
 
     /**

@@ -247,6 +247,7 @@ class ListingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->listingService->activate($listing);
+            $this->listingService->save($listing);
 
             $this->addFlash(
                 'success',
