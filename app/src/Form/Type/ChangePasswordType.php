@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Change Tassword Type.
+ * Change Password Type.
  */
 
 namespace App\Form\Type;
