@@ -12,7 +12,7 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
- * @class ListingService
+ * Class ListingService.
  */
 class ListingService implements ListingServiceInterface
 {

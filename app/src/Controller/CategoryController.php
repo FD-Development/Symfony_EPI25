@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- *  @class CategoryController.
+ *  Class CategoryController.
  */
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/category', name: 'category_')]

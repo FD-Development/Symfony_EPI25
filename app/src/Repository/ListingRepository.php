@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @class Listing Repository
+ * Class ListingRepository.
  *
  * @extends ServiceEntityRepository<Listing>
  */

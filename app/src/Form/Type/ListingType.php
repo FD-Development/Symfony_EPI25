@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @class ListingType
+ * Class ListingType.
  */
 class ListingType extends AbstractType
 {

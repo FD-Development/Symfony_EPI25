@@ -10,7 +10,7 @@ use App\Entity\Category;
 use App\Repository\CategoryRepository;
 
 /**
- * @class CategoryService
+ * Class CategoryService.
  */
 class CategoryService implements CategoryServiceInterface
 {

@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @class ChangePasswordType
+ * Class ChangePasswordType.
  */
 class ChangePasswordType extends AbstractType
 {

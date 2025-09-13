@@ -9,7 +9,7 @@ namespace App\Service;
 use App\Entity\Category;
 
 /**
- * @class CategoryServiceInterface
+ * Interface CategoryServiceInterface.
  */
 interface CategoryServiceInterface
 {

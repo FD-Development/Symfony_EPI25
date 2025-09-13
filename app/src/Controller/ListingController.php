@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- *  @class ListingController.
+ *  Class ListingController.
  */
 #[Route('/')]
 class ListingController extends AbstractController

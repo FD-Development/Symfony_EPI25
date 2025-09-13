@@ -13,7 +13,7 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
 /**
- * @class ListingFixtures.
+ * Class ListingFixtures.
  */
 class ListingFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {

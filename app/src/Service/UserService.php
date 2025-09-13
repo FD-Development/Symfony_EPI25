@@ -11,7 +11,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
- * @class  UserService.
+ * Class UserService.
  */
 class UserService implements UserServiceInterface
 {
