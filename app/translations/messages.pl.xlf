@@ -26,11 +26,11 @@
 
       <trans-unit id="action.filter_by_category">
         <source>action.filter_by_category</source>
-        <target>Wybierz kategorie</target>
+        <target>Wybierz kategorię</target>
       </trans-unit>
       <trans-unit id="action.clear_category_filter">
         <source>action.clear_category_filter</source>
-        <target>Wyczyść kategorie</target>
+        <target>Wyczyść kategorię</target>
       </trans-unit>
 
       <trans-unit id="action.back_to_list">
@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="action.listing_update">
         <source>action.listing_update</source>
-        <target>Zaaktualizuj ogłoszenie</target>
+        <target>Zaktualizuj ogłoszenie</target>
       </trans-unit>
       <trans-unit id="action.listing_delete">
         <source>action.listing_delete</source>
@@ -69,15 +69,15 @@
 
       <trans-unit id="action.category_create">
         <source>action.category_create</source>
-        <target>Utwórz nową kategorie</target>
+        <target>Utwórz nową kategorię</target>
       </trans-unit>
       <trans-unit id="action.category_update">
         <source>action.category_update</source>
-        <target>Zaaktualizuj kategorie</target>
+        <target>Zaktualizuj kategorię</target>
       </trans-unit>
       <trans-unit id="action.category_delete">
         <source>action.category_delete</source>
-        <target>Usuń kategorie</target>
+        <target>Usuń kategorię</target>
       </trans-unit>
 
       <trans-unit id="action.user_update">
@@ -99,7 +99,7 @@
       </trans-unit>
       <trans-unit id="action.create_category">
         <source>action.create_category</source>
-        <target>Stwórz te kategorie</target>
+        <target>Stwórz te kategorię</target>
       </trans-unit>
       <trans-unit id="action.update_user">
         <source>action.update_user</source>
@@ -148,6 +148,10 @@
       </trans-unit>
 
 
+      <trans-unit id="title.login">
+        <source>title.login</source>
+        <target>Logowanie</target>
+      </trans-unit>
       <trans-unit id="title.listing_index">
         <source>title.listing_index</source>
         <target>Przeglądanie ogłoszeń</target>
@@ -190,7 +194,7 @@
       </trans-unit>
       <trans-unit id="title.category_delete">
         <source>title.category_delete</source>
-        <target>Usunąć kategorie?</target>
+        <target>Usunąć kategorię?</target>
       </trans-unit>
       <trans-unit id="title.user_update">
         <source>title.user_update</source>
@@ -199,6 +203,10 @@
       <trans-unit id="title.password_update">
         <source>title.password_update</source>
         <target>Zmiana hasła</target>
+      </trans-unit>
+      <trans-unit id="title.please_sign_in">
+        <source>title.please_sign_in</source>
+        <target>Logowanie</target>
       </trans-unit>
 
       <trans-unit id="message.already_logged_in">

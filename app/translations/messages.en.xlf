@@ -146,7 +146,14 @@
         <source>label.password_repeat</source>
         <target>Repeat password</target>
       </trans-unit>
-
+      <trans-unit id="title.please_sign_in">
+        <source>title.please_sign_in</source>
+        <target>Log in</target>
+      </trans-unit>
+      <trans-unit id="title.login">
+        <source>title.login</source>
+        <target>Login</target>
+      </trans-unit>
 
       <trans-unit id="title.listing_index">
         <source>title.listing_index</source>

@@ -14,7 +14,7 @@
             </div>
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">{{ 'label.please_sign_in'|trans }}</h1>
+        <h1 class="h3 mb-3 font-weight-normal">{{ 'title.please_sign_in'|trans }}</h1>
         <label for="username">{{ 'label.username'|trans }}</label>
         <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
         <label for="password">{{ 'label.password'|trans }}</label>
@@ -23,7 +23,7 @@
 
         <div class="d-flex gap-2 flex-column flex-lg-row m-4">
             <button class="btn btn-lg btn-primary" type="submit">{{ 'action.login'|trans }}</button>
-            <a class="btn btn-lg btn-secondary">{{ 'action.go_to_listings' }}</a>
+            <a class="btn btn-lg btn-secondary">{{ 'action.go_to_listings'|trans }}</a>
         </div>
     </form>
 
