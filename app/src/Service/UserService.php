@@ -8,6 +8,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @class  UserService.
@@ -17,9 +18,10 @@ class UserService implements UserServiceInterface
     /**
      * Constructor.
      *
-     * @param UserRepository $userRepository User Repository
+     * @param UserRepository              $userRepository User Repository
+     * @param UserPasswordHasherInterface $passwordHasher Password Hasher
      */
-    public function __construct(private readonly UserRepository $userRepository)
+    public function __construct(private readonly UserRepository $userRepository, private readonly UserPasswordHasherInterface $passwordHasher)
     {
     }
 
@@ -41,6 +43,7 @@ class UserService implements UserServiceInterface
      */
     public function changePassword(User $user, string $newPassword): void
     {
-        $user->setPassword($newPassword);
+        $hashed = $this->passwordHasher->hashPassword($user, $newPassword);
+        $user->setPassword($hashed);
     }
 }
