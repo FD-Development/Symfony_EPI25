@@ -7,28 +7,37 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @class UserControllerTest
  */
 class UserControllerTest extends WebTestCase
 {
+    private EntityManagerInterface $entityManager;
+    private KernelBrowser $client;
+    private User $user;
+
     /**
-     * Create Authenticated Client1.
-     *
-     * @return KernelBrowser Kernel browser
+     * This method is called before each test.
      */
-    private function createAuthenticatedClient(): KernelBrowser
+    protected function setUp(): void
     {
-        // Assuming users exsist
-        $client = static::createClient();
-        $user = self::getContainer()->get('doctrine')->getRepository(User::class)->findOneBy([]);
+        $this->client = static::createClient();
+        $this->entityManager = static::getContainer()->get('doctrine')->getManager();
 
-        $client->loginUser($user);
+        $user = new User();
+        $user->setUsername('admin_test');
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setPassword('password');
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
-        return $client;
+        $this->user = $user;
+
+        $this->client->loginUser($user);
     }
 
     /**
@@ -36,12 +45,12 @@ class UserControllerTest extends WebTestCase
      */
     public function testUserViewPage(): void
     {
-        // given
-        $client = $this->createAuthenticatedClient();
         // when
-        $client->request('GET', '/user');
+        $this->client->request('GET', '/user');
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
         // then
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $resultStatusCode);
     }
 
     /**
@@ -49,12 +58,12 @@ class UserControllerTest extends WebTestCase
      */
     public function testUserUpdatePage(): void
     {
-        // given
-        $client = $this->createAuthenticatedClient();
         // when
-        $client->request('GET', '/user/1/update');
+        $this->client->request('GET', '/user/'.$this->user->getId().'/update');
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
         // then
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $resultStatusCode);
     }
 
     /**
@@ -62,11 +71,38 @@ class UserControllerTest extends WebTestCase
      */
     public function testPasswordUpdatePage(): void
     {
-        // given
-        $client = $this->createAuthenticatedClient();
         // when
-        $client->request('GET', '/user/1/password-update');
+        $this->client->request('GET', '/user/'.$this->user->getId().'/password-update');
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
         // then
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $resultStatusCode);
+    }
+
+    /**
+     * This method is called after each test.
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        if ($this->entityManager) {
+            $connection = $this->entityManager->getConnection();
+            $platform = $connection->getDatabasePlatform();
+
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0');
+
+            foreach ($this->entityManager->getMetadataFactory()->getAllMetadata() as $metadata) {
+                $tableName = $metadata->getTableName();
+                $connection->executeStatement(
+                    $platform->getTruncateTableSQL($tableName, true)
+                );
+            }
+
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1');
+
+            // zamknij EntityManager
+            $this->entityManager->close();
+        }
     }
 }
