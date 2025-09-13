@@ -172,7 +172,7 @@ class ListingController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('message.update_successfully')
+                $this->translator->trans('message.updated_successfully')
             );
 
             return $this->redirectToRoute('listing_view', ['id' => $listing->getId()]);

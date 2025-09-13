@@ -4,135 +4,135 @@
     <body>
       <trans-unit id="action.go_to_listings">
         <source>action.go_to_listings</source>
-        <target>Listings</target>
+        <target>Ogłoszenia</target>
       </trans-unit>
       <trans-unit id="action.go_to_categories">
         <source>action.go_to_categories</source>
-        <target>Categories</target>
+        <target>Kategorie</target>
       </trans-unit>
       <trans-unit id="action.go_to_activation">
         <source>action.go_to_activation</source>
-        <target>Activate Listings</target>
+        <target>Aktywuj Ogłoszenia</target>
       </trans-unit>
 
       <trans-unit id="action.login">
         <source>action.login</source>
-        <target>Login</target>
+        <target>Zaloguj się</target>
       </trans-unit>
       <trans-unit id="action.logout">
         <source>action.logout</source>
-        <target>Logout</target>
+        <target>Wyloguj się</target>
       </trans-unit>
 
       <trans-unit id="action.filter_by_category">
         <source>action.filter_by_category</source>
-        <target>Filter by category</target>
+        <target>Wybierz kategorie</target>
       </trans-unit>
       <trans-unit id="action.clear_category_filter">
         <source>action.clear_category_filter</source>
-        <target>Clear category</target>
+        <target>Wyczyść kategorie</target>
       </trans-unit>
 
       <trans-unit id="action.back_to_list">
         <source>action.back_to_list</source>
-        <target>Go back to list</target>
+        <target>Wróć do listy</target>
       </trans-unit>
       <trans-unit id="action.go_back">
         <source>action.go_back</source>
-        <target>Turn back</target>
+        <target>Cofnij się</target>
       </trans-unit>
       <trans-unit id="action.save_changes">
         <source>action.save_changes</source>
-        <target>Save Changes</target>
+        <target>Zapisz zmiany</target>
       </trans-unit>
       <trans-unit id="action.delete">
         <source>action.delete</source>
-        <target>Delete</target>
+        <target>Usuń</target>
       </trans-unit>
 
       <trans-unit id="action.listing_create">
         <source>action.listing_create</source>
-        <target>Create new Listing</target>
+        <target>Stwórz nowe ogłoszenie</target>
       </trans-unit>
       <trans-unit id="action.listing_update">
         <source>action.listing_update</source>
-        <target>Update Listing</target>
+        <target>Zaaktualizuj ogłoszenie</target>
       </trans-unit>
       <trans-unit id="action.listing_delete">
         <source>action.listing_delete</source>
-        <target>Delete listing</target>
+        <target>Usuń ogłoszenie</target>
       </trans-unit>
       <trans-unit id="action.listing_activate">
         <source>action.listing_activate</source>
-        <target>Activate Listing</target>
+        <target>Aktywuj ogłoszenie</target>
       </trans-unit>
 
       <trans-unit id="action.category_create">
         <source>action.category_create</source>
-        <target>Create new category</target>
+        <target>Utwórz nową kategorie</target>
       </trans-unit>
       <trans-unit id="action.category_update">
         <source>action.category_update</source>
-        <target>Update category</target>
+        <target>Zaaktualizuj kategorie</target>
       </trans-unit>
       <trans-unit id="action.category_delete">
         <source>action.category_delete</source>
-        <target>Delete category</target>
+        <target>Usuń kategorie</target>
       </trans-unit>
 
       <trans-unit id="action.user_update">
         <source>action.user_update</source>
-        <target>Change username</target>
+        <target>Zmień nazwę użytkownika</target>
       </trans-unit>
       <trans-unit id="action.password_update">
         <source>action.password_update</source>
-        <target>Change password</target>
+        <target>Zmień hasło</target>
       </trans-unit>
 
       <trans-unit id="action.create_listing">
         <source>action.create_listing</source>
-        <target>Create new Listing</target>
+        <target>Utwórz to ogłoszenie</target>
       </trans-unit>
       <trans-unit id="action.activate_listing">
         <source>action.activate_listing</source>
-        <target>Activate this listing</target>
+        <target>Aktywuj to ogłoszenie</target>
       </trans-unit>
       <trans-unit id="action.create_category">
         <source>action.create_category</source>
-        <target>Create this category</target>
+        <target>Stwórz te kategorie</target>
       </trans-unit>
       <trans-unit id="action.update_user">
         <source>action.update_user</source>
-        <target>Change your username</target>
+        <target>Zmień swoją nazwę użytkownika</target>
       </trans-unit>
       <trans-unit id="action.update_password">
         <source>action.update_password</source>
-        <target>Change your password</target>
+        <target>Zmień swoje hasło</target>
       </trans-unit>
 
       <trans-unit id="label.title">
         <source>label.title</source>
-        <target>Title</target>
+        <target>Tytuł</target>
       </trans-unit>
       <trans-unit id="label.description">
         <source>label.description</source>
-        <target>Description</target>
+        <target>Treść</target>
       </trans-unit>
       <trans-unit id="label.category">
         <source>label.category</source>
-        <target>Category</target>
+        <target>Kategoria</target>
       </trans-unit>
       <trans-unit id="label.activatedAt">
         <source>label.activatedAt</source>
-        <target>Activated at</target>
+        <target>Czas aktywacji</target>
       </trans-unit>
       <trans-unit id="label.createdAt">
         <source>label.createdAt</source>
-        <target>Created at</target>
+        <target>Czas utworzenia</target>
       </trans-unit>
       <trans-unit id="label.options">
         <source>label.options</source>
-        <target>Options</target>
+        <target>Opcje</target>
       </trans-unit>
       <trans-unit id="label.username">
         <source>label.username</source>
@@ -140,92 +140,91 @@
       </trans-unit>
       <trans-unit id="label.password">
         <source>label.password</source>
-        <target>Password</target>
+        <target>Hasło</target>
       </trans-unit>
       <trans-unit id="label.password_repeat">
         <source>label.password_repeat</source>
-        <target>Repeat password</target>
+        <target>Powtórz hasło</target>
       </trans-unit>
 
 
       <trans-unit id="title.listing_index">
         <source>title.listing_index</source>
-        <target>Browsing Listings</target>
+        <target>Przeglądanie ogłoszeń</target>
       </trans-unit>
       <trans-unit id="title.listing_index_activate">
         <source>title.listing_index_activate</source>
-        <target>Browsing Activation</target>
+        <target>Przeglądanie aktywacji</target>
       </trans-unit>
       <trans-unit id="title.listing_create">
         <source>title.listing_create</source>
-        <target>Creating Lisitng</target>
+        <target>Tworzenie ogłoszenia</target>
       </trans-unit>
       <trans-unit id="title.listing_view">
         <source>title.listing_view</source>
-        <target>Looking at Listing</target>
+        <target>Przeglądanie ogłoszenia</target>
       </trans-unit>
       <trans-unit id="title.listing_update">
         <source>title.listing_update</source>
-        <target>Updating Listing</target>
+        <target>Aktualizacja ogłoszenia</target>
       </trans-unit>
       <trans-unit id="title.listing_delete">
         <source>title.listing_delete</source>
-        <target>Delete Listing?</target>
+        <target>Usunąć ogłoszenie?</target>
       </trans-unit>
       <trans-unit id="title.listing_activate">
         <source>title.listing_activate</source>
-        <target>Activate Listing?</target>
+        <target>Aktywować ogłoszenie?</target>
       </trans-unit>
       <trans-unit id="title.category_index">
         <source>title.category_index</source>
-        <target>Browsing Categories</target>
+        <target>Przeglądanie Kategorii</target>
       </trans-unit>
       <trans-unit id="title.category_create">
         <source>title.category_create</source>
-        <target>Creating Category</target>
+        <target>Tworzenie Kategorii</target>
       </trans-unit>
       <trans-unit id="title.category_update">
         <source>title.category_update</source>
-        <target>Updating Category</target>
+        <target>Aktualizacja Kategorii</target>
       </trans-unit>
       <trans-unit id="title.category_delete">
         <source>title.category_delete</source>
-        <target>Delete Category?</target>
+        <target>Usunąć kategorie?</target>
       </trans-unit>
       <trans-unit id="title.user_update">
         <source>title.user_update</source>
-        <target>Changing Username</target>
+        <target>Zmiana nazwy użytkownika</target>
       </trans-unit>
       <trans-unit id="title.password_update">
         <source>title.password_update</source>
-        <target>Changing Password</target>
+        <target>Zmiana hasła</target>
       </trans-unit>
 
       <trans-unit id="message.already_logged_in">
         <source>message.already_logged_in</source>
-        <target>Logged in as:</target>
+        <target>Zalogowano jako</target>
       </trans-unit>
       <trans-unit id="message.activated_successfully">
         <source>message.activated_successfully</source>
-        <target>Activation Successful</target>
+        <target>Aktywowano ogłoszenie pomyślnie</target>
       </trans-unit>
       <trans-unit id="message.created_successfully">
         <source>message.created_successfully</source>
-        <target>Creation Successful</target>
+        <target>Stworzono pomyślnie</target>
       </trans-unit>
       <trans-unit id="message.update_successfully">
-        <source>message.update_successfully</source>
-        <target>Update Successful</target>
+        <source>message.updated_successfully</source>
+        <target>Aktualizacja pomyślna</target>
       </trans-unit>
       <trans-unit id="message.deleted_successfully">
         <source>message.deleted_successfully</source>
-        <target>Delete Successful</target>
+        <target>Usunięcie pomyślne</target>
       </trans-unit>
       <trans-unit id="message.password_changed_successfully">
         <source>message.password_changed_successfully</source>
-        <target>Password change Successful</target>
+        <target>Zmiana hasła pomyślna</target>
       </trans-unit>
-
 
     </body>
   </file>
