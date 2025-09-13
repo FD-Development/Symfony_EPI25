@@ -7,6 +7,8 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use App\Entity\Category;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -15,17 +17,44 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class CategoryControllerTest extends WebTestCase
 {
+    private EntityManagerInterface $entityManager;
+    private KernelBrowser $client;
+
+    private Category $testCategory;
+
+    /**
+     * This method is called before each test.
+     */
+    protected function setUp(): void
+    {
+        $this->client = static::createClient();
+        $this->entityManager = static::getContainer()->get('doctrine')->getManager();
+
+        $user = new User();
+        $user->setUsername('admin_test');
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setPassword('password');
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        $this->client->loginUser($user);
+
+        $category = $this->createTestCategory();
+        $this->testCategory = $category;
+
+    }
+
     /**
      * Tests route if '/category'  exists.
      */
     public function testCategoryPage(): void
     {
-        // given
-        $client = $this->createAdminClient();
         // when
-        $client->request('GET', '/category');
+        $this->client->request('GET', '/category');
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
         // then
-        $this->assertResponseIsSuccessful();
+        $this->assertEquals(200, $resultStatusCode);
     }
 
     /**
@@ -33,12 +62,13 @@ class CategoryControllerTest extends WebTestCase
      */
     public function testCategoryCreate(): void
     {
-        // given
-        $client = $this->createAdminClient();
+
         // when
-        $client->request('GET', '/category/create');
+        $this->client->request('GET', '/category/create');
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
         // then
-        $this->assertResponseIsSuccessful();
+        $this->assertEquals(200, $resultStatusCode);
     }
 
     /**
@@ -46,15 +76,16 @@ class CategoryControllerTest extends WebTestCase
      */
     public function testCategoryUpdate(): void
     {
-        // assuming Category with id 1 exists
+
         // given
-        $client = $this->createAdminClient();
+        $category = $this->testCategory;
 
         // when
-        $client->request('GET', '/category/update/1');
+        $this->client->request('GET', '/category/update/'.$category->getId());
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
 
         // then
-        $this->assertResponseIsSuccessful();
+        $this->assertEquals(200, $resultStatusCode);
     }
 
     /**
@@ -62,31 +93,58 @@ class CategoryControllerTest extends WebTestCase
      */
     public function testCategoryDelete(): void
     {
-        // assuming Category with id 1 exists
 
         // given
-        $client = $this->createAdminClient();
+        $category = $this->testCategory;
+
         // when
-        $client->request('GET', '/category/delete/1');
+        $this->client->request('GET', '/category/delete/'.$category->getId());
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
         // then
-        $this->assertResponseIsSuccessful();
+        $this->assertEquals(200, $resultStatusCode);
     }
 
     /**
-     * Create admin client.
+     * Creates test Category.
      *
-     * @return KernelBrowser Kernel Browser
+     * @return Category Category Entity
      */
-    private function createAdminClient(): KernelBrowser
+    private function createTestCategory(): Category
     {
-        $client = static::createClient();
+        $category = new Category();
+        $category->setTitle('Test Category');
+        $this->entityManager->persist($category);
+        $this->entityManager->flush();
 
-        $user = self::getContainer()->get('doctrine')
-            ->getRepository(User::class)
-            ->findOneBy(['username' => 'admin_0']);
+        return $category;
+    }
 
-        $client->loginUser($user);
+    /**
+     * This method is called after each test.
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
 
-        return $client;
+        if ($this->entityManager) {
+            $connection = $this->entityManager->getConnection();
+            $platform   = $connection->getDatabasePlatform();
+
+
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0');
+
+            foreach ($this->entityManager->getMetadataFactory()->getAllMetadata() as $metadata) {
+                $tableName = $metadata->getTableName();
+                $connection->executeStatement(
+                    $platform->getTruncateTableSQL($tableName, true)
+                );
+            }
+
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1');
+
+            // zamknij EntityManager
+            $this->entityManager->close();
+        }
     }
 }
