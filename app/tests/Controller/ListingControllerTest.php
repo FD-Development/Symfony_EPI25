@@ -6,9 +6,9 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\User;
-use App\Entity\Listing;
 use App\Entity\Category;
+use App\Entity\Listing;
+use App\Entity\User;
 use App\Service\ListingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -45,7 +45,6 @@ class ListingControllerTest extends WebTestCase
         $data = $this->createTestData();
         $this->testListing = $data[0];
         $this->testCategory = $data[1];
-
     }
 
     /**
@@ -64,7 +63,6 @@ class ListingControllerTest extends WebTestCase
      */
     public function testListingInPageShowsEmptyMessageWhenNoListings(): void
     {
-
         /* Simulation of empty pagination */
         $paginator = static::getContainer()->get('knp_paginator');
         $pagination = $paginator->paginate([], 1, 10);
@@ -72,7 +70,6 @@ class ListingControllerTest extends WebTestCase
         /* Service mock */
         $serviceMock = $this->createMock(ListingService::class);
         $serviceMock->method('getActivatedPaginatedListings')->willReturn($pagination);
-
 
         static::getContainer()->set(ListingService::class, $serviceMock);
 
@@ -103,7 +100,6 @@ class ListingControllerTest extends WebTestCase
      */
     public function testListingUpdate(): void
     {
-
         // given
         $listing = $this->testListing;
 
@@ -164,8 +160,7 @@ class ListingControllerTest extends WebTestCase
 
         if ($this->entityManager) {
             $connection = $this->entityManager->getConnection();
-            $platform   = $connection->getDatabasePlatform();
-
+            $platform = $connection->getDatabasePlatform();
 
             $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0');
 
@@ -181,6 +176,5 @@ class ListingControllerTest extends WebTestCase
             // zamknij EntityManager
             $this->entityManager->close();
         }
-
     }
 }

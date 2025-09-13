@@ -6,8 +6,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\User;
 use App\Entity\Category;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -41,7 +41,6 @@ class CategoryControllerTest extends WebTestCase
 
         $category = $this->createTestCategory();
         $this->testCategory = $category;
-
     }
 
     /**
@@ -62,7 +61,6 @@ class CategoryControllerTest extends WebTestCase
      */
     public function testCategoryCreate(): void
     {
-
         // when
         $this->client->request('GET', '/category/create');
         $resultStatusCode = $this->client->getResponse()->getStatusCode();
@@ -76,7 +74,6 @@ class CategoryControllerTest extends WebTestCase
      */
     public function testCategoryUpdate(): void
     {
-
         // given
         $category = $this->testCategory;
 
@@ -93,7 +90,6 @@ class CategoryControllerTest extends WebTestCase
      */
     public function testCategoryDelete(): void
     {
-
         // given
         $category = $this->testCategory;
 
@@ -129,8 +125,7 @@ class CategoryControllerTest extends WebTestCase
 
         if ($this->entityManager) {
             $connection = $this->entityManager->getConnection();
-            $platform   = $connection->getDatabasePlatform();
-
+            $platform = $connection->getDatabasePlatform();
 
             $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0');
 
