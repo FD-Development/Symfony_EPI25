@@ -86,11 +86,11 @@ class Listing
     /**
      * Setter for title.
      *
-     * @param string $title Title
+     * @param string|null $title Title
      *
      * @return $this
      */
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
 
@@ -110,11 +110,11 @@ class Listing
     /**
      * Setter for description.
      *
-     * @param string $description Description
+     * @param string|null $description Description
      *
      * @return $this
      */
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
