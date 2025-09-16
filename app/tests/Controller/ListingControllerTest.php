@@ -7,10 +7,16 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Category;
+use App\Entity\Enum\UserRole;
 use App\Entity\Listing;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Service\ListingService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -19,11 +25,23 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class ListingControllerTest extends WebTestCase
 {
-    private EntityManagerInterface $entityManager;
+    /**
+     * Listing | Category Repository.
+     */
+    private ?EntityManagerInterface $entityManager;
+    /**
+     * Test Client.
+     */
     private KernelBrowser $client;
+    /**
+     * Listing Entity.
+     */
+    private ?Listing $testListing;
 
-    private Listing $testListing;
-    private Category $testCategory;
+    /**
+     * Category Entity.
+     */
+    private ?Category $testCategory;
 
     /**
      * This method is called before each test.
@@ -33,15 +51,6 @@ class ListingControllerTest extends WebTestCase
         $this->client = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
 
-        $user = new User();
-        $user->setUsername('admin_test');
-        $user->setRoles(['ROLE_ADMIN']);
-        $user->setPassword('password');
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        $this->client->loginUser($user);
-
         $data = $this->createTestData();
         $this->testListing = $data[0];
         $this->testCategory = $data[1];
@@ -50,8 +59,10 @@ class ListingControllerTest extends WebTestCase
     /**
      * Test '/' route.
      */
-    public function testListingIndexPage(): void
+    public function testIndexRouteAnonymousUser(): void
     {
+        // given
+
         // when
         $this->client->request('GET', '/');
         // then
@@ -61,7 +72,7 @@ class ListingControllerTest extends WebTestCase
     /**
      * Tests if user is informed if there are no listings shown.
      */
-    public function testListingInPageShowsEmptyMessageWhenNoListings(): void
+    public function testListingPageShowsEmptyMessageWhenNoListings(): void
     {
         /* Simulation of empty pagination */
         $paginator = static::getContainer()->get('knp_paginator');
@@ -80,51 +91,131 @@ class ListingControllerTest extends WebTestCase
     }
 
     /**
+     * Tests if route `/listing/create` exists.
+     */
+    public function testCreateRouteAnonymousUser(): void
+    {
+        // given
+        $expectedStatusCode = 200;
+        // when
+        $this->client->request('GET', '/listing/create');
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
      * Tests if route `/listing/[id]` exists.
      */
-    public function testListingViewPage(): void
+    public function testViewRouteAdminUser(): void
     {
         // given
         $listing = $this->testListing;
+        $adminUser = $this->createUser([UserRole::ROLE_USER->value, UserRole::ROLE_ADMIN->value]);
+        $this->client->loginUser($adminUser);
+        $expectedStatusCode = 200;
 
         // when
         $this->client->request('GET', '/listing/'.$listing->getId());
         $resultStatusCode = $this->client->getResponse()->getStatusCode();
 
         // then
-        $this->assertEquals(200, $resultStatusCode);
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
     }
 
     /**
      * Test if route '/listing/update[id]' exists.
      */
-    public function testListingUpdate(): void
+    public function testUpdateRouteAdminUser(): void
     {
         // given
         $listing = $this->testListing;
+        $adminUser = $this->createUser([UserRole::ROLE_USER->value, UserRole::ROLE_ADMIN->value]);
+        $this->client->loginUser($adminUser);
+        $expectedStatusCode = 200;
 
         // when
         $this->client->request('GET', '/listing/update/'.$listing->getId());
         $resultStatusCode = $this->client->getResponse()->getStatusCode();
 
         // then
-        $this->assertEquals(200, $resultStatusCode);
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
+     * Test if Non authorised user has access route '/listing/update[id]' exists.
+     */
+    public function testUpdateRouteNonAuthorizedUser(): void
+    {
+        // given
+        $listing = $this->testListing;
+        $user = $this->createUser([UserRole::ROLE_USER->value]);
+        $this->client->loginUser($user);
+        $expectedStatusCode = 403;
+
+        // when
+        $this->client->request('GET', '/listing/update/'.$listing->getId());
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
     }
 
     /**
      * Test if route '/listing/delete[id]' exists.
      */
-    public function testListingDelete(): void
+    public function testDeleteRouteAdminUser(): void
     {
         // given
         $listing = $this->testListing;
+        $adminUser = $this->createUser([UserRole::ROLE_USER->value, UserRole::ROLE_ADMIN->value]);
+        $this->client->loginUser($adminUser);
+        $expectedStatusCode = 200;
 
         // when
         $this->client->request('GET', '/listing/delete/'.$listing->getId());
         $resultStatusCode = $this->client->getResponse()->getStatusCode();
 
         // then
-        $this->assertEquals(200, $resultStatusCode);
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
+     * Test if route '/listing/activate' exists.
+     */
+    public function testActivateIndexRouteAdminUser(): void
+    {
+        // given
+        $adminUser = $this->createUser([UserRole::ROLE_USER->value, UserRole::ROLE_ADMIN->value]);
+        $this->client->loginUser($adminUser);
+        $expectedStatusCode = 200;
+
+        // when
+        $this->client->request('GET', '/activate');
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
+     * Test if route '/listing/activate/[id]' exists.
+     */
+    public function testActivateListingRouteAdminUser(): void
+    {
+        // given
+        $listing = $this->testListing;
+        $adminUser = $this->createUser([UserRole::ROLE_USER->value, UserRole::ROLE_ADMIN->value]);
+        $this->client->loginUser($adminUser);
+        $expectedStatusCode = 200;
+
+        // when
+        $this->client->request('GET', '/listing/activate/'.$listing->getId());
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
     }
 
     /**
@@ -149,6 +240,33 @@ class ListingControllerTest extends WebTestCase
         $this->entityManager->flush();
 
         return [$listing, $category];
+    }
+
+    /**
+     * Create user.
+     *
+     * @param array $roles User roles
+     *
+     * @return User User entity
+     *
+     * @throws ContainerExceptionInterface|NotFoundExceptionInterface|ORMException|OptimisticLockException
+     */
+    private function createUser(array $roles): User
+    {
+        $passwordHasher = static::getContainer()->get('security.password_hasher');
+        $user = new User();
+        $user->setusername('test_user');
+        $user->setRoles($roles);
+        $user->setPassword(
+            $passwordHasher->hashPassword(
+                $user,
+                'p@55w0rd'
+            )
+        );
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $userRepository->save($user);
+
+        return $user;
     }
 
     /**
