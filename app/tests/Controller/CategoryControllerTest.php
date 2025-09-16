@@ -13,14 +13,23 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * @class CategoryControllerTest
+ * Class CategoryControllerTest.
  */
 class CategoryControllerTest extends WebTestCase
 {
-    private EntityManagerInterface $entityManager;
+    /**
+     * Category Repository.
+     */
+    private ?EntityManagerInterface $entityManager;
+    /**
+     * Test client.
+     */
     private KernelBrowser $client;
 
-    private Category $testCategory;
+    /**
+     * Category Entity.
+     */
+    private ?Category $testCategory;
 
     /**
      * This method is called before each test.
