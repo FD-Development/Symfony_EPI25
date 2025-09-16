@@ -43,7 +43,10 @@ class CategoryType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Category::class]);
+        $resolver->setDefaults([
+            'data_class' => Category::class,
+            'attr' => ['data-turbo' => 'false'],
+        ]);
     }
 
     /**

@@ -72,7 +72,10 @@ class ListingType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Listing::class]);
+        $resolver->setDefaults([
+            'data_class' => Listing::class,
+            'attr' => ['data-turbo' => 'false'],
+        ]);
     }
 
     /**

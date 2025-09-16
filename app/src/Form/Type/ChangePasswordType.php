@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ChangePasswordType.
@@ -38,5 +39,17 @@ class ChangePasswordType extends AbstractType
             'second_options' => ['label' => 'label.password_repeat'],
         ]);
         // The password fields must match.
+    }
+
+    /**
+     * Configures the options for this type.
+     *
+     * @param OptionsResolver $resolver The resolver for options
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'attr' => ['data-turbo' => 'false'],
+        ]);
     }
 }
