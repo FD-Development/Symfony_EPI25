@@ -481,6 +481,11 @@ Search.appendIndex(
             "summary": "Builds\u0020the\u0020form.",
             "url": "classes/App-Form-Type-ChangePasswordType.html#method_buildForm"
         },                {
+            "fqsen": "\\App\\Form\\Type\\ChangePasswordType\u003A\u003AconfigureOptions\u0028\u0029",
+            "name": "configureOptions",
+            "summary": "Configures\u0020the\u0020options\u0020for\u0020this\u0020type.",
+            "url": "classes/App-Form-Type-ChangePasswordType.html#method_configureOptions"
+        },                {
             "fqsen": "\\App\\Form\\Type\\ListingType",
             "name": "ListingType",
             "summary": "Class\u0020ListingType.",
