@@ -233,6 +233,10 @@
         <source>message.password_changed_successfully</source>
         <target>Zmiana hasła pomyślna</target>
       </trans-unit>
+      <trans-unit id="message.listing_not_found">
+        <source>message.listing_not_found</source>
+        <target>Nie znaleziono ogłoszenia</target>
+      </trans-unit>
 
     </body>
   </file>

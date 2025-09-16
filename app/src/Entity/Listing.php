@@ -38,8 +38,9 @@ class Listing
      * Description.
      */
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     #[Assert\Type('string')]
-    #[Assert\Length(max: 500)]
+    #[Assert\Length(min:30, max: 500)]
     private ?string $description = null;
 
     /**

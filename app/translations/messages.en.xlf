@@ -232,6 +232,10 @@
         <source>message.password_changed_successfully</source>
         <target>Password change Successful</target>
       </trans-unit>
+      <trans-unit id="message.listing_not_found">
+        <source>message.listing_not_found</source>
+        <target>Listing not found</target>
+      </trans-unit>
 
 
     </body>
