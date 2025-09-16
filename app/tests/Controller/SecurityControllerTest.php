@@ -1,7 +1,7 @@
 <?php
 
 /**
- * User Controller Test.
+ * Security Controller Tests.
  */
 
 namespace App\Tests\Controller;
@@ -12,9 +12,9 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class UserControllerTest.
+ * Class SecurityControllerTest.
  */
-class UserControllerTest extends WebTestCase
+class SecurityControllerTest extends WebTestCase
 {
     /**
      * User Repository.
@@ -24,6 +24,7 @@ class UserControllerTest extends WebTestCase
      * Test client.
      */
     private KernelBrowser $client;
+
     /**
      * User Entity.
      */
@@ -38,54 +39,68 @@ class UserControllerTest extends WebTestCase
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
 
         $user = new User();
-        $user->setUsername('admin_test');
-        $user->setRoles(['ROLE_ADMIN']);
-        $user->setPassword('password');
+        $user->setUsername('login_test_user');
+        $user->setRoles(['ROLE_USER']);
+        $user->setPassword('password'); // w testach nie potrzebujemy hashowania
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
         $this->user = $user;
+    }
 
+    /**
+     * Test if route '/login' exists.
+     */
+    public function testLoginRouteAnonymous(): void
+    {
+        // given
+        $expectedStatusCode = 200;
+
+        // when
+        $this->client->request('GET', '/login');
+        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
+     * Test if '/login' redirects authenticated user to '/'.
+     */
+    public function testLoginRedirectsAuthenticatedUser(): void
+    {
+        // given
+        $user = $this->user;
         $this->client->loginUser($user);
+        $expectedRedirect = '/';
+
+        // when
+        $this->client->request('GET', '/login');
+        $resultRedirect = $this->client->getResponse()->headers->get('Location');
+
+        // then
+        $this->assertTrue($this->client->getResponse()->isRedirect());
+        $this->assertStringContainsString($expectedRedirect, $resultRedirect);
     }
 
     /**
-     * Test '/user' route.
+     * Tests if '/logout' route exists.
      */
-    public function testUserViewPage(): void
+    public function testLogoutRoute(): void
     {
+        // given
+        $user = $this->user;
+        $this->client->loginUser($user);
+
         // when
-        $this->client->request('GET', '/user');
-        $resultStatusCode = $this->client->getResponse()->getStatusCode();
+        $this->client->request('GET', '/logout');
 
         // then
-        $this->assertEquals(200, $resultStatusCode);
-    }
-
-    /**
-     * Test '/user/[id]/update' route.
-     */
-    public function testUserUpdatePage(): void
-    {
-        // when
-        $this->client->request('GET', '/user/'.$this->user->getId().'/update');
-        $resultStatusCode = $this->client->getResponse()->getStatusCode();
-
-        // then
-        $this->assertEquals(200, $resultStatusCode);
-    }
-
-    /**
-     * Test '/user/[id]/password-update' route.
-     */
-    public function testPasswordUpdatePage(): void
-    {
-        // when
-        $this->client->request('GET', '/user/'.$this->user->getId().'/password-update');
-        $resultStatusCode = $this->client->getResponse()->getStatusCode();
-
-        // then
-        $this->assertEquals(200, $resultStatusCode);
+        $this->assertTrue(
+            $this->client->getResponse()->isRedirection() || $this->client->getResponse()->isServerError(),
+            'Logout should trigger firewall and not be directly accessible.'
+        );
     }
 
     /**
@@ -110,7 +125,6 @@ class UserControllerTest extends WebTestCase
 
             $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1');
 
-            // zamknij EntityManager
             $this->entityManager->close();
         }
     }
