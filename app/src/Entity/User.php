@@ -76,6 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Setter for username.
      *
      * @param string|null $username Username
+     * @return User User Entity
      */
     public function setUsername(?string $username): static
     {
@@ -116,6 +117,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Setter for roles.
      *
      * @param list<int, string> $roles Roles
+     * @return User User Entity
      */
     public function setRoles(array $roles): static
     {
@@ -140,6 +142,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Setter for password.
      *
      * @param string $password User password
+     * @return User User Entity
      */
     public function setPassword(string $password): static
     {

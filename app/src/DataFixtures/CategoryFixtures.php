@@ -49,6 +49,5 @@ class CategoryFixtures extends AbstractBaseFixtures
 
             return $category;
         });
-
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * User Repository.
+ */
+
 namespace App\Repository;
 
 use App\Entity\User;
@@ -18,6 +22,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 {
     /**
      * Constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -26,6 +32,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     * @param PasswordAuthenticatedUserInterface $user Password Authenticate Interface
+     * @param string $newHashedPassword Hashed Password
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {

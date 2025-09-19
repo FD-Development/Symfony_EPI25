@@ -37,7 +37,6 @@ class ListingServiceTest extends KernelTestCase
         $container = static::getContainer();
         $this->entityManager = $container->get('doctrine')->getManager();
         $this->listingService = $container->get(ListingServiceInterface::class);
-
     }
 
     /**

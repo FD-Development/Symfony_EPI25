@@ -9,6 +9,7 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Listing;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
@@ -85,7 +86,7 @@ class ListingFixtures extends AbstractBaseFixtures implements DependentFixtureIn
      * This method must return an array of fixtures classes
      * on which the implementing class depends on.
      *
-     * @phpstan-return array<class-string<FixtureInterface>>
+     * @return array<class-string<FixtureInterface>>
      */
     public function getDependencies(): array
     {
